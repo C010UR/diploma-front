@@ -6,7 +6,7 @@
     "moduleResolution": "node",
     "paths": {
       "@/*": [
-        "src/*"
+        "dashboard-app/src/*"
       ]
     },
     "lib": [

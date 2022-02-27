@@ -5,10 +5,17 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "format": "prettier-eslint --write \"src/**/*.{js,jsx,vue}\"",
+    "serve:request": "cross-env APP_TYPE=\"request-app\" vue-cli-service serve request-app/src/main.js",
+    "build:request": "cross-env APP_TYPE=\"request-app\" vue-cli-service build request-app/src/main.js",
+    "serve:dashboard": "cross-env APP_TYPE=\"dashboard-app\" vue-cli-service serve dashboard-app/src/main.js",
+    "build:dashboard": "cross-env APP_TYPE=\"dashboard-app\" vue-cli-service build dashboard-app/src/main.js"
   },
   "dependencies": {
+    "axios": "^0.26.0",
     "core-js": "^3.8.3",
+    "element-plus": "^2.0.3",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
@@ -16,6 +23,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@types/lodash-es": "*",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
@@ -23,8 +31,12 @@
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-airbnb": "^6.0.0",
     "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.0.3",
-    "eslint-plugin-vuejs-accessibility": "^1.1.0"
+    "eslint-plugin-vuejs-accessibility": "^1.1.0",
+    "prettier": "^2.5.1",
+    "webpack": "^5.69.1"
   }
 }
