@@ -201,7 +201,9 @@ export default {
             message: "Успешно отправлено",
             type: "success"
           });
+          this.setLocalStorate();
           this.resetForm();
+          this.getLocalStorage();
           this.toggleAll();
         })
         .catch(() => {
@@ -210,6 +212,18 @@ export default {
           );
           this.toggleAll();
         });
+    },
+    getLocalStorage() {
+      this.form.clientName = localStorage.getItem("request-client-name");
+      this.form.clientPhone = localStorage.getItem("request-client-phone");
+      this.form.urgency = localStorage.getItem("request-urgency");
+      this.form.cabinet = localStorage.getItem("request-client-cabinet");
+    },
+    setLocalStorate() {
+      localStorage.setItem("request-client-name", this.form.clientName);
+      localStorage.setItem("request-client-phone", this.form.clientPhone);
+      localStorage.setItem("request-urgency", this.form.urgency);
+      localStorage.setItem("request-client-cabinet", this.form.cabinet);
     }
   },
   mounted() {
@@ -244,6 +258,9 @@ export default {
         this.urgency.loading = false;
         ElMessage.error("Упс! Мы не смогли загрузить срочности. Обратитесь к администратору");
       });
+  },
+  beforeMount() {
+    this.getLocalStorage();
   }
 };
 </script>
