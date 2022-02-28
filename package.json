@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "lint": "vue-cli-service lint",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "build": "vue-cli-service build",
     "serve:request": "cross-env APP_TYPE=\"request-app\" vue-cli-service serve request-app/src/main.js",
-    "build:request": "cross-env APP_TYPE=\"request-app\" vue-cli-service build request-app/src/main.js",
-    "serve:dashboard": "cross-env APP_TYPE=\"dashboard-app\" vue-cli-service serve dashboard-app/src/main.js",
-    "build:dashboard": "cross-env APP_TYPE=\"dashboard-app\" vue-cli-service build dashboard-app/src/main.js"
+    "serve:dashboard": "cross-env APP_TYPE=\"dashboard-app\" vue-cli-service serve dashboard-app/src/main.js"
   },
   "dependencies": {
     "axios": "^0.26.0",
