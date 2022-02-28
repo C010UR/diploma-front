@@ -22,7 +22,6 @@ export default {
 }
 
 body {
-  --el-color-primary: #6d81a2;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: var(--el-color-primary);
   margin: 0;

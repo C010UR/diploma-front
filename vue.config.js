@@ -4,7 +4,7 @@ let result;
 
 if (process.env.NODE_ENV === "production") {
   const commonConfig = {
-    publicPath: process.env.NODE_ENV === "production" ? "/public/" : "/",
+    publicPath: "/public/",
     transpileDependencies: true
   };
   result = defineConfig({

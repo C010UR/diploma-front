@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "build": "vue-cli-service build",
-    "serve:request": "cross-env APP_TYPE=\"request-app\" vue-cli-service serve request-app/src/main.js",
-    "serve:dashboard": "cross-env APP_TYPE=\"dashboard-app\" vue-cli-service serve dashboard-app/src/main.js"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "serve:dashboard": "cross-env APP_TYPE=\"dashboard-app\" vue-cli-service serve dashboard-app/src/main.js",
+    "serve:request": "cross-env APP_TYPE=\"request-app\" vue-cli-service serve request-app/src/main.js"
   },
   "dependencies": {
     "axios": "^0.26.0",
@@ -34,6 +34,8 @@
     "eslint-plugin-vue": "^8.0.3",
     "eslint-plugin-vuejs-accessibility": "^1.1.0",
     "prettier": "^2.5.1",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
     "webpack": "^5.69.1"
   }
 }
