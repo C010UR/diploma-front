@@ -16,8 +16,9 @@
         v-model="form.clientPhone"
         placeholder="(33) 123-12-12"
         :disabled="disable.clientPhone"
-        maxlength="19"
+        maxlength="14"
         style="max-width: 32ch"
+        @input="phoneInput()"
       >
         <template #prepend>+375</template>
       </el-input>
@@ -96,7 +97,7 @@
 
 <script>
 import { ElMessage } from "element-plus";
-import axios from "../axios.js";
+import axios from "../../../shared/axios.js";
 
 export default {
   data() {
@@ -139,7 +140,7 @@ export default {
             trigger: "blur"
           },
           {
-            min: 6,
+            min: 5,
             message: "Ф.И.О. должно содержать более 5 символов",
             trigger: "blur"
           }
@@ -182,6 +183,14 @@ export default {
     resetForm() {
       this.$refs.formRef.resetFields();
     },
+    phoneInput() {
+      const val = this.form.clientPhone
+        .replace(/\D/g, "")
+        .match(/(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+      this.form.clientPhone = !val[2]
+        ? val[1]
+        : `(${val[1]}) ${val[2]}${val[3] ? `-${val[3]}` : ""}${val[4] ? `-${val[4]}` : ""}`;
+    },
     toggleAll() {
       Object.keys(this.disable).forEach((key) => {
         this.disable[key] = !this.disable[key];
@@ -210,7 +219,7 @@ export default {
         })
         .catch(() => {
           ElMessage.error(
-            "Упс! Мы не смогли отправить заявку. Повторите попытку либо обратитесь к администратору"
+            "Упс! Мы не смогли отправить заявку. Повторите попытку позже либо обратитесь к администратору"
           );
           this.toggleAll();
         });
@@ -226,49 +235,43 @@ export default {
       localStorage.setItem("request-client-phone", this.form.clientPhone);
       localStorage.setItem("request-urgency", this.form.urgency);
       localStorage.setItem("request-client-cabinet", this.form.cabinet);
+    },
+    getDefects() {
+      return axios.get("/request/defects").then((response) => {
+        this.defects.options = response.data.map((el) => ({ value: el, label: el }));
+        this.defects.loading = false;
+        return true;
+      });
+    },
+    getCabinets() {
+      return axios.get("/request/cabinets").then((response) => {
+        this.cabinet.options = response.data;
+        this.cabinet.loading = false;
+        return true;
+      });
+    },
+    getUrgencies() {
+      return axios.get("/request/urgency").then((response) => {
+        this.urgency.options = response.data;
+        this.urgency.loading = false;
+        return true;
+      });
     }
   },
   mounted() {
-    axios
-      .get("/request/defects")
-      .then((data) => {
-        this.defects.options = data.data.map((el) => ({ value: el, label: el }));
-        this.defects.loading = false;
+    Promise.all([this.getCabinets(), this.getDefects(), this.getUrgencies()])
+      .then(() => {
+        this.getLocalStorage();
+        this.toggleAll();
       })
       .catch(() => {
-        this.defects.loading = false;
-        ElMessage.error("Упс! Мы не смогли загрузить неисправности. Обратитесь к администратору");
-      });
-    axios
-      .get("/request/cabinets")
-      .then((data) => {
-        this.cabinet.options = data.data;
-        this.cabinet.loading = false;
-      })
-      .catch(() => {
-        this.cabinet.loading = false;
-        ElMessage.error("Упс! Мы не смогли загрузить кабинеты. Обратитесь к администратору");
-      });
-    axios
-      .get("/request/urgency")
-      .then((data) => {
-        this.urgency.options = data.data;
-        this.urgency.loading = false;
-      })
-      .catch(() => {
-        this.urgency.loading = false;
-        ElMessage.error("Упс! Мы не смогли загрузить срочности. Обратитесь к администратору");
+        ElMessage.error(
+          "Упс! Мы не смогли загрузить данные. Пожалуйста, обратитесь к администратору."
+        );
       });
   },
   beforeMount() {
-    this.getLocalStorage();
+    this.toggleAll();
   }
 };
 </script>
-
-<style scoped>
-form {
-  margin: 0;
-  padding: 0;
-}
-</style>

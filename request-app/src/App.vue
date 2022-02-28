@@ -16,7 +16,7 @@ export default {
 
 <style>
 :root {
-  --bg-color: var(--el-text-color-primary);
+  --bg-color: #6d81a2;
 }
 
 *,
