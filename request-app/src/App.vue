@@ -15,10 +15,6 @@ export default {
 </script>
 
 <style>
-:root {
-  --bg-color: #6d81a2;
-}
-
 *,
 *:before,
 *:after {
@@ -26,8 +22,9 @@ export default {
 }
 
 body {
+  --el-color-primary: #6d81a2;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: var(--bg-color);
+  background-color: var(--el-color-primary);
   margin: 0;
   padding: 0;
 }

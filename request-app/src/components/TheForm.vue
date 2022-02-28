@@ -79,9 +79,9 @@
       <el-input
         type="textarea"
         v-model="form.description"
-        :disabled="disable.description"
         placeholder="В 9.15 сломался комьютер"
-        autosize
+        :disabled="disable.description"
+        :autosize="{ minRows: 3 }"
       ></el-input>
     </el-form-item>
     <el-form-item>
