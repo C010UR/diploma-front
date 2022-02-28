@@ -1,17 +1,14 @@
 <template>
-  <base-form>
-    <the-header></the-header>
+  <base-form header="Заявка на ремонт">
     <the-form></the-form>
   </base-form>
 </template>
 
 <script>
-import TheHeader from "./components/TheHeader.vue";
 import TheForm from "./components/TheForm.vue";
 
 export default {
   components: {
-    TheHeader,
     TheForm
   }
 };

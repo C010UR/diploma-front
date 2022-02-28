@@ -1,11 +1,21 @@
 <template>
-  <div>
+  <div class="container">
+    <div class="header">
+      <h1>{{ header }}</h1>
+      <el-divider class="divider"></el-divider>
+    </div>
     <slot></slot>
   </div>
 </template>
 
+<script>
+export default {
+  props: ["header"]
+};
+</script>
+
 <style scoped>
-div {
+.container {
   display: block;
   margin: 10vh auto;
   padding: 1rem;
@@ -16,14 +26,28 @@ div {
   transition: 0.3s;
 }
 
+.header {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+.header h1 {
+  color: var(--el-text-color-primary);
+  margin: 0;
+  margin-bottom: 0.75rem;
+}
+.header.divider {
+  width: 100%;
+  margin: 0 auto;
+}
+
 @media only screen and (max-width: 1300px) {
-  div {
+  .container {
     width: 60%;
   }
 }
 
 @media only screen and (max-width: 900px) {
-  div {
+  .container {
     width: 80%;
   }
 }

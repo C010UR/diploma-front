@@ -14,12 +14,13 @@
     <el-form-item label="Телефон" prop="clientPhone">
       <el-input
         v-model="form.clientPhone"
-        placeholder="+375 (33) 123-12-12"
+        placeholder="(33) 123-12-12"
         :disabled="disable.clientPhone"
         maxlength="19"
-        clearable
-        style="max-width: 23ch"
-      ></el-input>
+        style="max-width: 32ch"
+      >
+        <template #prepend>+375</template>
+      </el-input>
     </el-form-item>
     <el-form-item label="Кабинет" prop="cabinet">
       <el-select
@@ -100,6 +101,7 @@ import axios from "../axios.js";
 export default {
   data() {
     return {
+      socket: null,
       cabinet: {
         options: [],
         loading: true
@@ -240,7 +242,6 @@ export default {
     axios
       .get("/request/cabinets")
       .then((data) => {
-        console.log(data);
         this.cabinet.options = data.data;
         this.cabinet.loading = false;
       })
