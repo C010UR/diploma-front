@@ -18,7 +18,7 @@
         :disabled="disable.clientPhone"
         maxlength="14"
         style="max-width: 32ch"
-        @input="phoneInput()"
+        @input="formatPhone()"
       >
         <template #prepend>+375</template>
       </el-input>
@@ -75,7 +75,7 @@
         style="width: 100%; max-width: 132ch"
       />
     </el-form-item>
-    <el-form-item label="Описание" prop="description">
+    <el-form-item label="Подробности неисправностей" prop="description">
       <el-input
         type="textarea"
         v-model="form.description"
@@ -141,7 +141,14 @@ export default {
           },
           {
             min: 5,
-            message: "Ф.И.О. должно содержать более 5 символов",
+            message: "Ф.И.О. должно содержать более 4 символов",
+            trigger: "blur"
+          }
+        ],
+        clientPhone: [
+          {
+            pattern: /\(\d{2}\) \d{3}-\d{2}-\d{2}/,
+            message: "Телефон должен быть действительным",
             trigger: "blur"
           }
         ],
@@ -149,14 +156,14 @@ export default {
           {
             required: true,
             message: "Пожалуйста, укажите кабинет",
-            trigger: "change"
+            trigger: "blur"
           }
         ],
         urgency: [
           {
             required: true,
             message: "Пожалуйста, укажите срочность",
-            trigger: "change"
+            trigger: "blur"
           }
         ],
         defects: [
@@ -183,7 +190,7 @@ export default {
     resetForm() {
       this.$refs.formRef.resetFields();
     },
-    phoneInput() {
+    formatPhone() {
       const val = this.form.clientPhone
         .replace(/\D/g, "")
         .match(/(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);

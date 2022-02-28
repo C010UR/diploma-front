@@ -40,20 +40,20 @@ export default {
   margin: 0 auto;
 }
 
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 1250px) {
   .container {
     width: 60%;
   }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 850px) {
   .container {
     width: 80%;
   }
 }
 
-@media only screen and (max-width: 700px) {
-  div {
+@media only screen and (max-width: 600px) {
+  .container {
     width: 100%;
   }
 }
