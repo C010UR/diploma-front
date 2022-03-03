@@ -96,10 +96,28 @@
 </template>
 
 <script>
-import { ElMessage } from "element-plus";
+import {
+  ElMessage,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElSelect,
+  ElSelectV2,
+  ElOption,
+  ElButton
+} from "element-plus";
 import axios from "../../../shared/axios.js";
 
 export default {
+  components: {
+    ElForm,
+    ElFormItem,
+    ElInput,
+    ElSelect,
+    ElSelectV2,
+    ElOption,
+    ElButton
+  },
   data() {
     return {
       socket: null,
@@ -156,14 +174,14 @@ export default {
           {
             required: true,
             message: "Пожалуйста, укажите кабинет",
-            trigger: "blur"
+            trigger: "change"
           }
         ],
         urgency: [
           {
             required: true,
             message: "Пожалуйста, укажите срочность",
-            trigger: "blur"
+            trigger: "change"
           }
         ],
         defects: [

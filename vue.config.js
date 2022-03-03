@@ -8,6 +8,20 @@ if (process.env.NODE_ENV === "production") {
     transpileDependencies: true
   };
   result = defineConfig({
+    configureWebpack: {
+      plugins: [
+        require("unplugin-element-plus/webpack")({
+          useSource: true
+        })
+      ]
+    },
+    css: {
+      loaderOptions: {
+        scss: {
+          additionalData: '@use "./shared/styles/element/style.scss" as *;'
+        }
+      }
+    },
     pages: {
       index: {
         entry: "request-app/src/main.js",
@@ -25,6 +39,20 @@ if (process.env.NODE_ENV === "production") {
   });
 } else {
   result = defineConfig({
+    css: {
+      loaderOptions: {
+        scss: {
+          additionalData: '@use "./shared/styles/element/style.scss" as *;'
+        }
+      }
+    },
+    configureWebpack: {
+      plugins: [
+        require("unplugin-element-plus/webpack")({
+          useSource: true
+        })
+      ]
+    },
     devServer: {
       port: process.env.APP_TYPE === "request-app" ? 8080 : 7070
     }
