@@ -1,7 +1,5 @@
 const { defineConfig } = require("@vue/cli-service");
 
-let result;
-
 if (process.env.NODE_ENV === "production") {
   const commonConfig = {
     publicPath: "/public/",

@@ -3,6 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@babel/core': ^7.12.16
   '@babel/eslint-parser': ^7.12.16
+  '@element-plus/icons-vue': ^1.0.0
   '@types/lodash-es': '*'
   '@vue/cli-plugin-babel': ~5.0.0
   '@vue/cli-plugin-eslint': ~5.0.0
@@ -24,16 +25,19 @@ specifiers:
   sass-loader: ^12.6.0
   socket.io-client: ^4.4.1
   unplugin-element-plus: ^0.3.1
+  validator: ^13.7.0
   vue: ^3.2.13
   vue-router: ^4.0.3
   vuex: ^4.0.0
   webpack: ^5.69.1
 
 dependencies:
+  '@element-plus/icons-vue': 1.0.0_vue@3.2.31
   axios: 0.26.0
   core-js: 3.21.1
   element-plus: 2.0.3_1a412d14def5ff5ca1122000e4bee666
   socket.io-client: 4.4.1
+  validator: 13.7.0
   vue: 3.2.31
   vue-router: 4.0.12_vue@3.2.31
   vuex: 4.0.2_vue@3.2.31
@@ -1273,6 +1277,14 @@ packages:
 
   /@element-plus/icons-vue/0.2.7_vue@3.2.31:
     resolution: {integrity: sha512-S8kDbfVaWkQvbUYQE1ui448tzaHfUvyESCep9J6uPRlViyQPXjdIfwLBhV6AmQSOfFS8rL+xehJGhvzPXLrSBg==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      vue: 3.2.31
+    dev: false
+
+  /@element-plus/icons-vue/1.0.0_vue@3.2.31:
+    resolution: {integrity: sha512-v8W6uiOfwq9GRWBLc0fvp0WwExU09BLdYfldRBxWUCJHeJ9WHeFrtt6BdixGVl9SCZ2V5soB8gi4tr365a9p/Q==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
@@ -6963,6 +6975,11 @@ packages:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
     dev: true
+
+  /validator/13.7.0:
+    resolution: {integrity: sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==}
+    engines: {node: '>= 0.10'}
+    dev: false
 
   /vary/1.1.2:
     resolution: {integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=}

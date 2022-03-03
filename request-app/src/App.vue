@@ -6,10 +6,12 @@
 
 <script>
 import TheForm from "./components/TheForm.vue";
+import BaseForm from "../../shared/components/baseForm.vue";
 
 export default {
   components: {
-    TheForm
+    TheForm,
+    BaseForm
   }
 };
 </script>
