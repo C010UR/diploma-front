@@ -1,13 +1,24 @@
 <template>
-  <el-scrollbar>
-    <el-menu default-active="1" style="min-height: 100vh" @select="handleSelect">
+  <el-drawer
+    :model-value="modelValue"
+    title="Меню"
+    lock-scroll
+    direction="ltr"
+    :size="size"
+    @closed="$emit('update:modelValue', false)"
+  >
+    <el-menu
+      default-active="1"
+      style="margin-left: -1.25rem; margin-right: -1.25rem"
+      @select="handleSelect"
+    >
       <el-menu-item index="1">
         <el-icon><message-box /></el-icon>
         <span>Заявки</span>
       </el-menu-item>
       <el-sub-menu index="2">
         <template #title>
-          <el-icon><tools /></el-icon>
+          <el-icon><icon-menu /></el-icon>
           <span>Администрирование</span>
         </template>
         <el-menu-item index="1-1">Мастера</el-menu-item>
@@ -18,23 +29,30 @@
         <el-menu-item index="1-6">Администраторы</el-menu-item>
       </el-sub-menu>
     </el-menu>
-  </el-scrollbar>
+  </el-drawer>
 </template>
 
 <script>
-import { ElScrollbar, ElMenu, ElSubMenu, ElMenuItem, ElIcon } from "element-plus";
-import { MessageBox, Tools } from "@element-plus/icons-vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { ElMenu, ElSubMenu, ElMenuItem, ElIcon, ElDrawer } from "element-plus";
+import { MessageBox, Menu as IconMenu } from "@element-plus/icons-vue";
 
 export default {
   components: {
-    ElScrollbar,
     ElMenu,
     ElSubMenu,
     ElMenuItem,
     ElIcon,
     MessageBox,
-    Tools
+    IconMenu,
+    ElDrawer
+  },
+  props: {
+    modelValue: {
+      type: Boolean,
+      required: true
+    }
   },
   setup() {
     const router = useRouter();
@@ -63,7 +81,27 @@ export default {
           router.push("/");
       }
     };
-    return { handleSelect };
+
+    const size = ref("20%");
+
+    const handleSize = () => {
+      if (window.innerWidth <= 600) {
+        size.value = "100%";
+      } else if (window.innerWidth <= 850) {
+        size.value = "40%";
+      } else if (window.innerWidth <= 1100) {
+        size.value = "30%";
+      } else {
+        size.value = "20%";
+      }
+    };
+
+    onMounted(() => {
+      window.addEventListener("resize", handleSize);
+      handleSize();
+    });
+
+    return { handleSelect, size };
   }
 };
 </script>

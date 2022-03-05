@@ -5,6 +5,8 @@
     style="width: 100%; padding: 0"
     stripe
     empty-text="Данные отсутствуют"
+    height="100%"
+    @sort-change="changeSorting"
   >
     <el-table-column type="expand">
       <template #default="props">
@@ -17,9 +19,9 @@
         ></dashboard-table-row>
       </template>
     </el-table-column>
-    <el-table-column label="Создано в" prop="created_at" width="145" />
+    <el-table-column label="Создано в" prop="created_at" width="145" sortable="custom" />
     <el-table-column label="Выполнено в" prop="done_at" width="145" />
-    <el-table-column label="Статус" prop="status" align="center" width="130">
+    <el-table-column label="Статус" prop="status" align="center" width="130" sortable="custom">
       <template #default="scope">
         <el-tag effect="dark" :type="getStatusType(scope.row.status)">
           {{ getStatus(scope.row.status) }}
@@ -34,8 +36,9 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { ElTable, ElTableColumn, ElTag, ElMessage } from "element-plus";
+import { h, ref, onMounted, computed, watch } from "vue";
+import { useStore } from "vuex";
+import { ElTable, ElTableColumn, ElTag, ElMessage, ElNotification } from "element-plus";
 import { io } from "socket.io-client";
 import DashboardTableRow from "./DashboardTableForm.vue";
 import axios from "../../../shared/axios.js";
@@ -47,14 +50,18 @@ export default {
     ElTag,
     DashboardTableRow
   },
-  setup() {
+  emits: ["update"],
+  setup(props, { emit }) {
+    const store = useStore();
+    const tableOptions = computed(() => store.getters.optionsAndFilters);
+
     const masters = ref([]);
     const commonPerformedWorks = ref([]);
     const tableData = ref([]);
-    const tableOptions = ref({});
+
     const getStatusType = (status) => {
       switch (status) {
-        case "0:compeleted":
+        case "0:completed":
           return "success";
         case "1:expired":
           return "danger";
@@ -71,7 +78,7 @@ export default {
     };
     const getStatus = (status) => {
       switch (status) {
-        case "0:compeleted":
+        case "0:completed":
           return "Выполнено";
         case "1:expired":
           return "Просрочено";
@@ -87,12 +94,13 @@ export default {
           return "Неизвестно";
       }
     };
+
     const padStr = (i) => {
       return i < 10 ? `0${i}` : `${i}`;
     };
     const dateToStr = (date) => {
       // prettier-ignore
-      return `${padStr(date.getFullYear())}-${padStr(date.getMonth())}-${padStr(date.getDate())} ${padStr(date.getHours())}:${padStr(date.getMinutes())}`;
+      return `${padStr(date.getFullYear())}-${padStr(date.getMonth() + 1)}-${padStr(date.getDate())} ${padStr(date.getHours())}:${padStr(date.getMinutes())}`;
     };
     const mapTableData = () => {
       for (let i = 0; i < tableData.value.length; i++) {
@@ -104,7 +112,7 @@ export default {
     };
     const getTableData = () => {
       axios
-        .get("/dashboard/table", tableOptions)
+        .post("/dashboard/table", tableOptions.value)
         .then((response) => {
           tableData.value = response.data;
           mapTableData();
@@ -113,6 +121,10 @@ export default {
           ElMessage.error("Упс! Не удалось загрузить данные!");
         });
     };
+    watch(tableOptions, () => {
+      getTableData();
+    });
+
     const getMasters = () => {
       axios
         .get("/dashboard/control/technicians")
@@ -123,6 +135,7 @@ export default {
           ElMessage.error("Упс! Не удалось загрузить данные!");
         });
     };
+
     const getCommonPerformedWorks = () => {
       axios
         .get("/dashboard/control/works")
@@ -133,6 +146,7 @@ export default {
           ElMessage.error("Упс! Не удалось загрузить данные!");
         });
     };
+
     const submitSuccess = () => {
       ElMessage.success("Успешно сохранено");
       getTableData();
@@ -140,11 +154,24 @@ export default {
     const submitError = () => {
       ElMessage.error("Упс! Не удалось сохранить данные");
     };
+
+    const changeSorting = ({ prop, order }) => {
+      store.dispatch("setOptions", {
+        orderBy: prop,
+        orderDirection: order
+      });
+    };
+
     const socket = io("http://localhost:3000", {
       transports: ["websocket"]
     });
     socket.on("row:new", () => {
       getTableData();
+      ElNotification({
+        title: "Новая заявка",
+        message: h("i", { style: "color: teal" }, "Появилась новая заявка!")
+      });
+      emit("update");
     });
     onMounted(() => {
       getTableData();
@@ -158,7 +185,8 @@ export default {
       getStatusType,
       getStatus,
       submitSuccess,
-      submitError
+      submitError,
+      changeSorting
     };
   }
 };

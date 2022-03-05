@@ -41,11 +41,13 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-link type="primary" href="/login">Войти</el-link>
+        <router-link to="/login" custom v-slot="{ navigate }">
+          <el-button type="text" @click="navigate">Войти</el-button>
+        </router-link>
         <div style="margin-left: auto; margin-right: 0">
           <el-button @click="resetForm()">Очистить</el-button>
           <el-button type="primary" :loading="disable.submit" @click="submitForm()">
-            Войти
+            Зарегестрироваться
           </el-button>
         </div>
       </el-form-item>
@@ -57,7 +59,7 @@
 import validator from "validator";
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { ElMessage, ElForm, ElFormItem, ElInput, ElButton, ElLink } from "element-plus";
+import { ElMessage, ElForm, ElFormItem, ElInput, ElButton } from "element-plus";
 import BaseForm from "../../../shared/components/baseForm.vue";
 import axios from "../../../shared/axios.js";
 
@@ -67,8 +69,7 @@ export default {
     ElForm,
     ElFormItem,
     ElInput,
-    ElButton,
-    ElLink
+    ElButton
   },
   setup() {
     const router = useRouter();

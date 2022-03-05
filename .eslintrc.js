@@ -13,7 +13,7 @@ module.exports = {
     quotes: ["error", "double"],
     "comma-dangle": ["error", "never"],
     "import/extensions": ["error", "ignorePackages"],
-    "operator-linebreak": ["error", "before"],
+    "operator-linebreak": ["error", "after", { overrides: { "?": "before", ":": "before" } }],
     "no-underscore-dangle": "off",
     "no-plusplus": "off"
   }

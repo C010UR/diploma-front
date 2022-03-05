@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="formRef" class="form" label-position="top" :model="form" :rules="rules">
+  <el-form ref="formRef" label-position="top" :model="form" :rules="rules">
     <el-form-item label="Ф.И.О." prop="clientName">
       <el-input
         v-model="form.clientName"

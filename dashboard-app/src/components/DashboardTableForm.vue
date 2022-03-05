@@ -94,7 +94,7 @@ export default {
           {
             required: true,
             message: "Пожалуйста, укажите проделанные работы",
-            trigger: "change"
+            trigger: "blur"
           }
         ]
       }
