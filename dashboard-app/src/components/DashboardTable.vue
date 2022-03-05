@@ -51,6 +51,13 @@ export default {
     DashboardTableRow
   },
   emits: ["update"],
+  props: {
+    update: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
   setup(props, { emit }) {
     const store = useStore();
     const tableOptions = computed(() => store.getters.optionsAndFilters);
@@ -161,6 +168,11 @@ export default {
         orderDirection: order
       });
     };
+
+    watch(
+      () => props.update,
+      () => getTableData()
+    );
 
     const socket = io("http://localhost:3000", {
       transports: ["websocket"]

@@ -17,7 +17,8 @@
     <el-form-item label="Оператор" v-if="valueInput !== 'selectTechnician'">
       <el-select
         v-model="form.operator"
-        :placeholder="form.operatorColumns[0].label"
+        :placeholder="form.operatorColumns.length > 0 ? form.operatorColumns[0].label : ' '"
+        :disabled="form.operatorColumns.length === 0"
         no-data-text="Упс!"
         style="width: 14ch"
       >
@@ -140,7 +141,8 @@
       />
     </el-form-item>
     <el-form-item>
-      <el-button @click="resetForm()">Очистить</el-button>
+      <el-button type="primary" @click="submitForm()" :disabled="formNotReady">ОК</el-button>
+      <el-button @click="resetForm()">Отменить</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -172,12 +174,13 @@ export default {
   },
   props: {
     id: {
-      type: String,
+      type: Number,
       required: true
     }
   },
   emits: ["filter", "error"],
   setup(props, { emit }) {
+    const formNotReady = ref(true);
     const formRef = ref(null);
     const columns = [
       {
@@ -249,17 +252,11 @@ export default {
     };
     const valueInput = ref("");
     const form = reactive({
-      column: "created_at",
+      column: "",
       operator: "",
       value: null,
       value2: null,
-      operatorColumns: [
-        operators.greater,
-        operators.greaterEquals,
-        operators.lower,
-        operators.lowerEquals,
-        operators.between
-      ]
+      operatorColumns: []
     });
 
     const dateInputShortcuts = [
@@ -377,22 +374,16 @@ export default {
         });
     };
 
-    const resetForm = () => {
-      form.column = "created_at";
-      form.operator = "";
-      form.value = null;
-      form.value2 = null;
-    };
-
     watch(
       () => form.column,
       () => {
         switch (form.column) {
-          case "performed_works":
-            form.operatorColumns = [operators.equals, operators.contains];
-            break;
+          case "":
           case "technician_id":
             form.operatorColumns = [];
+            break;
+          case "performed_works":
+            form.operatorColumns = [operators.equals, operators.contains];
             break;
           case "defects":
             form.operatorColumns = [operators.equals, operators.like];
@@ -435,7 +426,7 @@ export default {
         } else if (form.column === "technician_id") {
           getTechnicianOptions();
           valueInput.value = "selectTechnician";
-        } else if (form.column === "performed_works") {
+        } else if (form.column === "performed_works" && form.operator) {
           form.value = [];
           getContainsOptions("works");
           valueInput.value = "containsWorks";
@@ -471,28 +462,51 @@ export default {
     watch(
       () => [form.value, form.value2],
       () => {
-        if (
+        if (!form.column || !form.value || form.value === []) {
+          formNotReady.value = true;
+        } else if (
           (valueInput.value === "between" || valueInput.value === "betweenStatus") &&
           form.value2
         ) {
-          emit("filter", {
-            id: props.id,
-            column: form.column,
-            operator: form.operator,
-            value: [form.value, form.value2]
-          });
+          formNotReady.value = false;
         } else if (!(valueInput.value === "between" || valueInput.value === "betweenStatus")) {
-          emit("filter", {
-            id: props.id,
-            column: form.column,
-            operator: form.operator,
-            value: form.value
-          });
+          formNotReady.value = false;
         }
       }
     );
 
+    const submitForm = () => {
+      if ((valueInput.value === "between" || valueInput.value === "betweenStatus") && form.value2) {
+        emit("filter", {
+          id: props.id,
+          column: form.column,
+          operator: form.operator,
+          value: [form.value, form.value2]
+        });
+      } else if (!(valueInput.value === "between" || valueInput.value === "betweenStatus")) {
+        emit("filter", {
+          id: props.id,
+          column: form.column,
+          operator: form.operator,
+          value: form.value
+        });
+      }
+    };
+
+    const resetForm = () => {
+      form.column = "";
+      form.operator = "";
+      form.value = null;
+      form.value2 = null;
+      formNotReady.value = true;
+      emit("filter", {
+        id: props.id,
+        delete: true
+      });
+    };
+
     return {
+      formNotReady,
       form,
       formRef,
       columns,
@@ -502,7 +516,8 @@ export default {
       statusOptions,
       technicianOptions,
       containsOptions,
-      resetForm
+      resetForm,
+      submitForm
     };
   }
 };

@@ -20,6 +20,13 @@ export default createStore({
     },
     filters(state) {
       return { filters: state.filters };
+    },
+    lastFilter(state) {
+      let max = "";
+      state.filters.forEach((filter) => {
+        max = filter.id > max ? filter.id : max;
+      });
+      return max;
     }
   },
   mutations: {
@@ -48,8 +55,8 @@ export default createStore({
       state.filters = state.filters.filter((row) => row.id !== payload.id);
       state.filters.push(payload);
     },
-    removeFilters(state) {
-      state.filters = [];
+    removeFilters(state, payload) {
+      state.filters = state.filters.filter((row) => row.id < payload.id);
     }
   },
   actions: {
@@ -59,8 +66,8 @@ export default createStore({
     addFilters(context, payload) {
       context.commit("addFilters", payload);
     },
-    removeFilters(context) {
-      context.commit("removeFilters");
+    removeFilters(context, payload) {
+      context.commit("removeFilters", payload);
     }
   }
 });

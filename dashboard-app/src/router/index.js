@@ -4,7 +4,7 @@ import DashboardView from "../views/DashboardView.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/dashboard/",
     name: "home",
     component: DashboardView,
     meta: {
@@ -12,25 +12,25 @@ const routes = [
     }
   },
   {
-    path: "/login",
+    path: "/dashboard/login",
     name: "login",
-    component: () => import(/* webpackChunkName: "about" */ "../views/LoginView.vue"),
+    component: () => import("../views/LoginView.vue"),
     meta: {
       requiresAuth: false
     }
   },
   {
-    path: "/register",
+    path: "/dashboard/register",
     name: "register",
-    component: () => import(/* webpackChunkName: "about" */ "../views/RegisterView.vue"),
+    component: () => import(/* webpackChunkName: "registerView" */ "../views/RegisterView.vue"),
     meta: {
       requiresAuth: false
     }
   },
   {
-    path: "/controls",
+    path: "/dashboard/controls",
     name: "controls",
-    component: () => import(/* webpackChunkName: "about" */ "../views/ControlsView.vue"),
+    component: () => import(/* webpackChunkName: "controlsView" */ "../views/ControlsView.vue"),
     meta: {
       requiresAuth: true
     }
@@ -38,6 +38,7 @@ const routes = [
 ];
 
 const router = createRouter({
+  BASE_URL: process.env.NODE_ENV === "production" ? "/dashboard/" : "/",
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
