@@ -38,16 +38,13 @@
 <script>
 import { h, ref, onMounted, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { ElTable, ElTableColumn, ElTag, ElMessage, ElNotification } from "element-plus";
+import { ElMessage, ElNotification } from "element-plus";
 import { io } from "socket.io-client";
 import DashboardTableRow from "./DashboardTableForm.vue";
 import axios from "../../../shared/axios.js";
 
 export default {
   components: {
-    ElTable,
-    ElTableColumn,
-    ElTag,
     DashboardTableRow
   },
   emits: ["update"],

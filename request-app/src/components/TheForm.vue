@@ -96,28 +96,10 @@
 </template>
 
 <script>
-import {
-  ElMessage,
-  ElForm,
-  ElFormItem,
-  ElInput,
-  ElSelect,
-  ElSelectV2,
-  ElOption,
-  ElButton
-} from "element-plus";
+import { ElMessage } from "element-plus";
 import axios from "../../../shared/axios.js";
 
 export default {
-  components: {
-    ElForm,
-    ElFormItem,
-    ElInput,
-    ElSelect,
-    ElSelectV2,
-    ElOption,
-    ElButton
-  },
   data() {
     return {
       socket: null,

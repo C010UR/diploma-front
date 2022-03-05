@@ -1,13 +1,18 @@
 const { defineConfig } = require("@vue/cli-service");
+const { ElementPlusResolver } = require("unplugin-vue-components/resolvers");
+const Components = require("unplugin-vue-components/webpack");
 
 if (process.env.NODE_ENV === "production") {
   const commonConfig = {
-    publicPath: "/public/",
+    publicPath: "/",
     transpileDependencies: true
   };
   result = defineConfig({
     configureWebpack: {
       plugins: [
+        Components({
+          resolvers: [ElementPlusResolver()]
+        }),
         require("unplugin-element-plus/webpack")({
           useSource: true
         })
@@ -46,6 +51,9 @@ if (process.env.NODE_ENV === "production") {
     },
     configureWebpack: {
       plugins: [
+        Components({
+          resolvers: [ElementPlusResolver()]
+        }),
         require("unplugin-element-plus/webpack")({
           useSource: true
         })

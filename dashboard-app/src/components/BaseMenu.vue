@@ -53,7 +53,6 @@
 <script>
 import { onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
-import { ElMenu, ElSubMenu, ElMenuItem, ElIcon, ElDrawer } from "element-plus";
 import {
   MessageBox,
   Setting,
@@ -67,11 +66,6 @@ import {
 
 export default {
   components: {
-    ElMenu,
-    ElSubMenu,
-    ElMenuItem,
-    ElIcon,
-    ElDrawer,
     MessageBox,
     Setting,
     User,

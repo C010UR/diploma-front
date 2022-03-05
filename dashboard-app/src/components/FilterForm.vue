@@ -149,29 +149,9 @@
 
 <script>
 import { ref, reactive, watch } from "vue";
-import {
-  ElForm,
-  ElFormItem,
-  ElSelect,
-  ElSelectV2,
-  ElInput,
-  ElOption,
-  ElButton,
-  ElDatePicker
-} from "element-plus";
 import axios from "../../../shared/axios.js";
 
 export default {
-  components: {
-    ElForm,
-    ElFormItem,
-    ElSelect,
-    ElSelectV2,
-    ElInput,
-    ElOption,
-    ElButton,
-    ElDatePicker
-  },
   props: {
     id: {
       type: Number,

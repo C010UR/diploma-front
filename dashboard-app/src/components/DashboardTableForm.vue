@@ -49,17 +49,9 @@
 </template>
 
 <script>
-import { ElForm, ElFormItem, ElSelect, ElOption, ElButton } from "element-plus";
 import axios from "../../../shared/axios.js";
 
 export default {
-  components: {
-    ElForm,
-    ElFormItem,
-    ElSelect,
-    ElOption,
-    ElButton
-  },
   props: {
     prop: {
       type: Object,

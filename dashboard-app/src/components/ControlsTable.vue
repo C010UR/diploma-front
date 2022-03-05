@@ -75,28 +75,10 @@
 
 <script>
 import { h, ref, reactive, onMounted } from "vue";
-import {
-  ElTable,
-  ElTableColumn,
-  ElButton,
-  ElForm,
-  ElFormItem,
-  ElInput,
-  ElPopconfirm,
-  ElNotification
-} from "element-plus";
+import { ElNotification } from "element-plus";
 import axios from "../../../shared/axios.js";
 
 export default {
-  components: {
-    ElTable,
-    ElTableColumn,
-    ElButton,
-    ElForm,
-    ElFormItem,
-    ElInput,
-    ElPopconfirm
-  },
   props: {
     isUrgency: {
       type: Boolean,

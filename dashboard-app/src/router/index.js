@@ -4,7 +4,7 @@ import DashboardView from "../views/DashboardView.vue";
 
 const routes = [
   {
-    path: "/dashboard/",
+    path: "/dashboard",
     name: "home",
     component: DashboardView,
     meta: {
@@ -22,7 +22,7 @@ const routes = [
   {
     path: "/dashboard/register",
     name: "register",
-    component: () => import(/* webpackChunkName: "registerView" */ "../views/RegisterView.vue"),
+    component: () => import("../views/RegisterView.vue"),
     meta: {
       requiresAuth: false
     }
@@ -30,7 +30,7 @@ const routes = [
   {
     path: "/dashboard/controls",
     name: "controls",
-    component: () => import(/* webpackChunkName: "controlsView" */ "../views/ControlsView.vue"),
+    component: () => import("../views/ControlsView.vue"),
     meta: {
       requiresAuth: true
     }

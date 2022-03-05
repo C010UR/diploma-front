@@ -9,12 +9,7 @@
 </template>
 
 <script>
-import { ElDivider } from "element-plus";
-
 export default {
-  components: {
-    ElDivider
-  },
   props: ["header"]
 };
 </script>
