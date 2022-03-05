@@ -1,7 +1,7 @@
 <template>
   <el-table
     :data="tableData"
-    :row-key="tableData._id"
+    :row-key="(row) => row._id"
     style="width: 100%; padding: 0"
     stripe
     empty-text="Данные отсутствуют"
