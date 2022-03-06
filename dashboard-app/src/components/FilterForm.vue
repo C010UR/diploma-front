@@ -304,7 +304,7 @@ export default {
     const statusOptions = ref([
       {
         label: "Выполнено",
-        value: "0:completed"
+        value: "6:completed"
       },
       {
         label: "Просрочено",

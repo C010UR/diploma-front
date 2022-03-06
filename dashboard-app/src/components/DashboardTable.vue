@@ -72,7 +72,7 @@ export default {
 
     const getStatusType = (status) => {
       switch (status) {
-        case "0:completed":
+        case "6:completed":
           return "success";
         case "1:expired":
           return "danger";
@@ -89,7 +89,7 @@ export default {
     };
     const getStatus = (status) => {
       switch (status) {
-        case "0:completed":
+        case "6:completed":
           return "Выполнено";
         case "1:expired":
           return "Просрочено";
