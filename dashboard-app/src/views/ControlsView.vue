@@ -29,7 +29,7 @@
           </el-popconfirm>
         </div>
       </el-header>
-      <el-main style="padding: 0 10rem">
+      <el-main class="main">
         <div>
           <section class="section" id="masters" :ref="(el) => (refs.masters = el)">
             <controls-table table="technicians" label="Мастера"></controls-table>
@@ -161,3 +161,26 @@ export default {
   }
 };
 </script>
+
+<style>
+.main {
+  padding: 0 10rem;
+}
+@media only screen and (max-width: 1250px) {
+  .main {
+    padding: 0 5rem;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .main {
+    padding: 0 2rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .main {
+    padding: 0;
+  }
+}
+</style>
