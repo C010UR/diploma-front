@@ -108,7 +108,7 @@ export default {
 
     const logout = () => {
       axios.post("/dashboard/auth/logout").then(() => {
-        router.push("/login");
+        router.push("/dashboard/login");
       });
     };
 

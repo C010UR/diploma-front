@@ -22,7 +22,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <router-link to="/register" custom v-slot="{ navigate }">
+        <router-link to="/dashboard/register" custom v-slot="{ navigate }">
           <el-button type="text" @click="navigate">Зарегестрироваться</el-button>
         </router-link>
         <div style="margin-left: auto; margin-right: 0">
@@ -72,7 +72,7 @@ export default {
       axios
         .post("/dashboard/auth/login", { login: form.login, password: form.password })
         .then(() => {
-          router.push("/");
+          router.push("/dashboard/");
         })
         .catch((error) => {
           if (error.response?.status === 401) {

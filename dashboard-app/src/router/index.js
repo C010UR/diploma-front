@@ -48,14 +48,14 @@ router.beforeEach(async (to, from, next) => {
     const data = await axios.get("/dashboard/auth/check");
     if (!data.data.authorized) {
       if (to.meta.requiresAuth) {
-        next("/login");
+        next("/dashboard/login");
       } else {
         next();
       }
     } else if (to.meta.requiresAuth) {
       next();
     } else {
-      next("/");
+      next("/dashboard/");
     }
   } catch {
     next();

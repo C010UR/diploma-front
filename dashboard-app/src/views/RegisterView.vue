@@ -41,7 +41,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <router-link to="/login" custom v-slot="{ navigate }">
+        <router-link to="/dashboard/login" custom v-slot="{ navigate }">
           <el-button type="text" @click="navigate">Войти</el-button>
         </router-link>
         <div style="margin-left: auto; margin-right: 0">
@@ -100,7 +100,7 @@ export default {
           secret_key: form.secret
         })
         .then(() => {
-          router.push("/login");
+          router.push("/dashboard/login");
         })
         .catch(() => {
           ElMessage.error("Логин уже существует либо секретный ключ неверен!");

@@ -10,12 +10,19 @@
   >
     <el-table-column type="expand">
       <template #default="props">
+        <div v-if="props.row.defect_description" style="margin-left: 2rem">
+          <h4>Подробности Неисправности:</h4>
+          <div style="margin-right: 2rem">
+            <p>{{ props.row.defect_description }}</p>
+          </div>
+        </div>
         <dashboard-table-row
           :prop="props"
           :masters="masters"
           :commonPerformedWorks="commonPerformedWorks"
           @submit:error="submitError()"
           @submit:success="submitSuccess()"
+          style="margin-left: 2rem"
         ></dashboard-table-row>
       </template>
     </el-table-column>

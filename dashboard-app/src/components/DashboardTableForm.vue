@@ -1,51 +1,46 @@
 <template>
-  <el-form
-    ref="formRef"
-    class="form"
-    label-position="top"
-    :model="form"
-    :rules="rules"
-    inline
-    style="margin-left: 2rem"
-  >
-    <el-form-item label="Мастер" prop="technician_id">
-      <el-select
-        v-model="form.technician_id"
-        placeholder="Пожалуйста, выберите мастера"
-        no-data-text="Упс! Что-то пошло не так!"
-        style="min-width: 35ch"
-      >
-        <el-option
-          v-for="item in masters"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="Проделанные работы" prop="performed_works">
-      <el-select
-        v-model="form.performed_works"
-        placeholder="Пожалуйста, выберите проделанные работы"
-        multiple
-        allow-create
-        filterable
-        clearable
-        no-data-text="Упс! Что-то пошло не так!"
-        style="min-width: 80ch"
-      >
-        <el-option
-          v-for="item in commonPerformedWorks"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="ㅤ">
-      <el-button type="primary" @click="submitForm()">Сохранить</el-button>
-    </el-form-item>
-  </el-form>
+  <div>
+    <h4>Проделанные работы:</h4>
+    <el-form ref="formRef" class="form" label-position="top" :model="form" :rules="rules" inline>
+      <el-form-item label="Мастер" prop="technician_id">
+        <el-select
+          v-model="form.technician_id"
+          placeholder="Пожалуйста, выберите мастера"
+          no-data-text="Упс! Что-то пошло не так!"
+          style="min-width: 42ch"
+        >
+          <el-option
+            v-for="item in masters"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="Проделанные работы" prop="performed_works">
+        <el-select
+          v-model="form.performed_works"
+          placeholder="Пожалуйста, выберите проделанные работы"
+          multiple
+          allow-create
+          filterable
+          clearable
+          no-data-text="Упс! Что-то пошло не так!"
+          style="min-width: 80ch"
+        >
+          <el-option
+            v-for="item in commonPerformedWorks"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="ㅤ">
+        <el-button type="primary" @click="submitForm()">Сохранить</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
