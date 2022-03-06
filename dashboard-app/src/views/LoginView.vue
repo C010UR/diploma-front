@@ -23,7 +23,7 @@
       </el-form-item>
       <el-form-item>
         <router-link to="/dashboard/register" custom v-slot="{ navigate }">
-          <el-button type="text" @click="navigate">Зарегестрироваться</el-button>
+          <el-button type="text" @click="navigate">Зарегистрироваться</el-button>
         </router-link>
         <div style="margin-left: auto; margin-right: 0">
           <el-button @click="resetForm()">Очистить</el-button>
@@ -39,17 +39,13 @@
 <script>
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { ElMessage, ElForm, ElFormItem, ElInput, ElButton } from "element-plus";
+import { ElMessage } from "element-plus";
 import BaseForm from "../../../shared/components/baseForm.vue";
 import axios from "../../../shared/axios.js";
 
 export default {
   components: {
-    BaseForm,
-    ElForm,
-    ElFormItem,
-    ElInput,
-    ElButton
+    BaseForm
   },
   setup() {
     const router = useRouter();
@@ -72,7 +68,7 @@ export default {
       axios
         .post("/dashboard/auth/login", { login: form.login, password: form.password })
         .then(() => {
-          router.push("/dashboard/");
+          router.push("/dashboard");
         })
         .catch((error) => {
           if (error.response?.status === 401) {

@@ -303,10 +303,6 @@ export default {
 
     const statusOptions = ref([
       {
-        label: "Выполнено",
-        value: "6:completed"
-      },
-      {
         label: "Просрочено",
         value: "1:expired"
       },
@@ -325,6 +321,10 @@ export default {
       {
         label: "> недели",
         value: "5:none"
+      },
+      {
+        label: "Выполнено",
+        value: "6:completed"
       }
     ]);
 

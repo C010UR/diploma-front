@@ -12,7 +12,7 @@
       style="margin-left: -1.25rem; margin-right: -1.25rem"
       @select="handleSelect"
     >
-      <el-menu-item index="/dashboard/">
+      <el-menu-item index="/dashboard">
         <el-icon><message-box /></el-icon>
         <span>Заявки</span>
       </el-menu-item>

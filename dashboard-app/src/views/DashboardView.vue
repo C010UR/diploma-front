@@ -45,7 +45,7 @@
         </div>
       </el-header>
       <el-main style="padding: 0">
-        <dashboard-table @update="getPages" :update="update"></dashboard-table>
+        <dashboard-table @update="handleUpdate()" :update="update"></dashboard-table>
       </el-main>
       <el-footer height="4rem">
         <div style="margin-left: auto; margin-right: 0">
@@ -65,22 +65,10 @@
 </template>
 
 <script>
-import { ref, watch, onMounted } from "vue";
+import { h, ref, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import {
-  ElContainer,
-  ElHeader,
-  ElMain,
-  ElFooter,
-  ElPagination,
-  ElPopconfirm,
-  ElAvatar,
-  ElButton,
-  ElSwitch,
-  ElRow,
-  ElMessage
-} from "element-plus";
+import { ElMessage, ElNotification } from "element-plus";
 import { UserFilled, Menu, RefreshRight } from "@element-plus/icons-vue";
 import BaseMenu from "../components/BaseMenu.vue";
 import FilterForm from "../components/FilterForm.vue";
@@ -89,16 +77,6 @@ import axios from "../../../shared/axios.js";
 
 export default {
   components: {
-    ElContainer,
-    ElHeader,
-    ElMain,
-    ElFooter,
-    ElPagination,
-    ElPopconfirm,
-    ElAvatar,
-    ElButton,
-    ElSwitch,
-    ElRow,
     BaseMenu,
     FilterForm,
     DashboardTable
@@ -116,7 +94,6 @@ export default {
     const toggleDrawer = () => {
       drawer.value = !drawer.value;
     };
-
     const getPages = () => {
       axios
         .post("/dashboard/table/count", store.getters.filters)
@@ -132,6 +109,14 @@ export default {
     const toggleUpdate = () => {
       getPages();
       update.value = !update.value;
+    };
+
+    const handleUpdate = () => {
+      getPages();
+      ElNotification({
+        title: "Новая заявка",
+        message: h("i", { style: "color: teal" }, "Появилась новая заявка!")
+      });
     };
 
     watch([currentPage, pageSize], () => {
@@ -180,12 +165,12 @@ export default {
       filterCount,
       drawer,
       toggleDrawer,
+      handleUpdate,
       update,
       toggleUpdate,
       totalRows,
       currentPage,
       pageSize,
-      getPages,
       logout,
       handleFilter,
       handleError,

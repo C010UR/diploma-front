@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:3000";
+const url = "https://mtec-support.herokuapp.com";
 const axiosInstance = axios.create({
   baseURL: `${url}/support/api`,
   headers: {

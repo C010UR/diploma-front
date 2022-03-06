@@ -43,9 +43,9 @@
 </template>
 
 <script>
-import { h, ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { ElMessage, ElNotification } from "element-plus";
+import { ElMessage } from "element-plus";
 import { io } from "socket.io-client";
 import DashboardTableRow from "./DashboardTableForm.vue";
 import axios from "../../../shared/axios.js";
@@ -178,15 +178,11 @@ export default {
       () => getTableData()
     );
 
-    const socket = io("http://localhost:3000", {
+    const socket = io("https://mtec-support.herokuapp.com/", {
       transports: ["websocket"]
     });
     socket.on("row:new", () => {
       getTableData();
-      ElNotification({
-        title: "Новая заявка",
-        message: h("i", { style: "color: teal" }, "Появилась новая заявка!")
-      });
       emit("update");
     });
     onMounted(() => {

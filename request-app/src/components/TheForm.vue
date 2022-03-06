@@ -234,8 +234,12 @@ export default {
     getLocalStorage() {
       this.form.clientName = localStorage.getItem("request-client-name");
       this.form.clientPhone = localStorage.getItem("request-client-phone");
-      this.form.urgency = localStorage.getItem("request-urgency");
-      this.form.cabinet = localStorage.getItem("request-client-cabinet");
+      if (localStorage.getItem("request-urgency")) {
+        this.form.urgency = localStorage.getItem("request-urgency");
+      }
+      if (localStorage.getItem("request-client-cabinet")) {
+        this.form.cabinet = localStorage.getItem("request-client-cabinet");
+      }
     },
     setLocalStorate() {
       localStorage.setItem("request-client-name", this.form.clientName);
@@ -265,20 +269,18 @@ export default {
       });
     }
   },
-  mounted() {
+  mounted() {},
+  beforeMount() {
     Promise.all([this.getCabinets(), this.getDefects(), this.getUrgencies()])
       .then(() => {
         this.getLocalStorage();
-        this.toggleAll();
       })
       .catch(() => {
         ElMessage.error(
           "Упс! Мы не смогли загрузить данные. Пожалуйста, обратитесь к администратору."
         );
+        this.toggleAll();
       });
-  },
-  beforeMount() {
-    this.toggleAll();
   }
 };
 </script>

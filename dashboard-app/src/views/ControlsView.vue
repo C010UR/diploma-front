@@ -68,16 +68,6 @@
 <script>
 import { ref, reactive, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import {
-  ElContainer,
-  ElHeader,
-  ElMain,
-  ElPopconfirm,
-  ElAvatar,
-  ElButton,
-  ElRow,
-  ElDivider
-} from "element-plus";
 import { UserFilled, Menu } from "@element-plus/icons-vue";
 import BaseMenu from "../components/BaseMenu.vue";
 import ControlsTable from "../components/ControlsTable.vue";
@@ -85,15 +75,7 @@ import axios from "../../../shared/axios.js";
 
 export default {
   components: {
-    ElContainer,
-    ElHeader,
-    ElMain,
-    ElPopconfirm,
-    ElAvatar,
-    ElButton,
-    ElRow,
     BaseMenu,
-    ElDivider,
     ControlsTable
   },
   setup() {

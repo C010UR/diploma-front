@@ -38,7 +38,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  BASE_URL: process.env.NODE_ENV === "production" ? "/dashboard/" : "/",
+  BASE_URL: process.env.NODE_ENV === "production" ? "/dashboard" : "/",
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
@@ -55,7 +55,7 @@ router.beforeEach(async (to, from, next) => {
     } else if (to.meta.requiresAuth) {
       next();
     } else {
-      next("/dashboard/");
+      next("/dashboard");
     }
   } catch {
     next();

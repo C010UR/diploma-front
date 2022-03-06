@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === "production") {
       index: {
         entry: "request-app/src/main.js",
         filename: "index.html",
-        title: "Завка на ремонт",
+        title: "Заявка на ремонт",
         ...commonConfig
       },
       dashboard: {
