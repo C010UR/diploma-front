@@ -347,7 +347,10 @@ export default {
       axios
         .get(`/dashboard/control/${table}`)
         .then((response) => {
-          containsOptions.value = response.data;
+          containsOptions.value = response.data.map((row) => ({
+            value: row.label,
+            label: row.label
+          }));
         })
         .catch(() => {
           emit("error");
