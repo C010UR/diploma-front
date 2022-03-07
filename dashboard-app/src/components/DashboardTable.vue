@@ -27,7 +27,7 @@
       </template>
     </el-table-column>
     <el-table-column label="Создано в" prop="created_at" width="145" sortable="custom" />
-    <el-table-column label="Выполнено в" prop="done_at" width="145" />
+    <el-table-column label="Выполнено в" prop="done_at" width="145" sortable="custom" />
     <el-table-column label="Статус" prop="status" align="center" width="130" sortable="custom">
       <template #default="scope">
         <el-tag effect="dark" :type="getStatusType(scope.row.status)">
@@ -35,8 +35,8 @@
         </el-tag>
       </template>
     </el-table-column>
-    <el-table-column label="Кабинет" prop="cabinet" width="180" />
-    <el-table-column label="Ф.И.О. заказчика" prop="client" width="260" />
+    <el-table-column label="Кабинет" prop="cabinet" width="180" sortable="custom" />
+    <el-table-column label="Ф.И.О. заказчика" prop="client" width="260" sortable="custom" />
     <el-table-column label="Телефон" prop="client_phone" width="120" />
     <el-table-column label="Неисправности" prop="defects" min-width="300" />
   </el-table>

@@ -48,17 +48,34 @@
         <dashboard-table @update="handleUpdate()" :update="update"></dashboard-table>
       </el-main>
       <el-footer height="4rem">
-        <div style="margin-left: auto; margin-right: 0">
+        <el-row style="margin-left: auto; margin-right: 0">
+          <span style="color: #606266; margin-top: 1.5rem">
+            Всего: {{ totalRows }} На странице:
+          </span>
+          <el-select v-model="pageSize" style="margin: 0 0.5rem; margin-top: 1.125rem; width: 8ch">
+            <el-option
+              v-for="item in [10, 20, 50, 100]"
+              :key="item"
+              :label="item"
+              :value="item"
+            ></el-option>
+          </el-select>
           <el-pagination
             v-model:currentPage="currentPage"
             v-model:page-size="pageSize"
-            :page-sizes="[10, 20, 50, 100, 200]"
             background
-            layout="total, sizes, prev, pager, next"
+            layout="prev, pager, next"
             :total="totalRows"
             style="margin-top: 1rem"
           ></el-pagination>
-        </div>
+          <el-button
+            type="primary"
+            style="margin: 0 0.5rem; margin-top: 1.125rem"
+            @click="getReport()"
+          >
+            Создать отчет
+          </el-button>
+        </el-row>
       </el-footer>
     </el-container>
   </el-container>
@@ -102,6 +119,28 @@ export default {
         })
         .catch(() => {
           ElMessage.error("Упс! Не удалось загрузить страницы!");
+        });
+    };
+
+    const getReport = () => {
+      axios
+        .get("/dashboard/report", {
+          params: {
+            filters: JSON.stringify(store.getters.optionsAndFilters)
+          },
+          responseType: "blob"
+        })
+        .then((response) => {
+          console.log(response.data);
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "Report.xlsx");
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch(() => {
+          ElMessage.error("Упс! Не удалось загрузить отчет!");
         });
     };
 
@@ -166,6 +205,7 @@ export default {
       drawer,
       toggleDrawer,
       handleUpdate,
+      getReport,
       update,
       toggleUpdate,
       totalRows,
