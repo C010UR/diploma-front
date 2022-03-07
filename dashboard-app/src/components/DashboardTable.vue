@@ -2,6 +2,7 @@
   <el-table
     :data="tableData"
     :row-key="(row) => row._id"
+    v-loading="loading"
     style="width: 100%; padding: 0"
     stripe
     empty-text="Данные отсутствуют"
@@ -121,12 +122,16 @@ export default {
         }
       }
     };
-    const getTableData = () => {
+    const loading = ref(false);
+
+    const getTableData = (isLoading = true) => {
+      loading.value = isLoading;
       axios
         .post("/dashboard/table", tableOptions.value)
         .then((response) => {
           tableData.value = response.data;
           mapTableData();
+          loading.value = false;
         })
         .catch(() => {
           ElMessage.error("Упс! Не удалось загрузить данные!");
@@ -182,7 +187,7 @@ export default {
       transports: ["websocket"]
     });
     socket.on("row:new", () => {
-      getTableData();
+      getTableData(false);
       emit("update");
     });
     onMounted(() => {
@@ -192,6 +197,7 @@ export default {
     });
     return {
       tableData,
+      loading,
       masters,
       commonPerformedWorks,
       getStatusType,
