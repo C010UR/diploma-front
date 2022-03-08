@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --mode production",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "serve:dashboard": "cross-env APP_TYPE=\"dashboard-app\" vue-cli-service serve dashboard-app/src/main.js",
-    "serve:support": "cross-env APP_TYPE=\"request-app\" vue-cli-service serve request-app/src/main.js"
+    "serve:dashboard": "cross-env APP_TYPE=\"dashboard-app\" vue-cli-service serve dashboard-app/src/main.js --mode development",
+    "serve:support": "cross-env APP_TYPE=\"request-app\" vue-cli-service serve request-app/src/main.js --mode development"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^1.0.0",

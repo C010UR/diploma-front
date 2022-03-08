@@ -182,7 +182,6 @@ export default {
       () => props.update,
       () => getTableData()
     );
-
     const socket = io(
       process.env.NODE_ENV === "production"
         ? "https://mtec-support.herokuapp.com/"
