@@ -1,4 +1,30 @@
 <template>
+  <el-drawer
+    v-model="reportDrawer"
+    direction="rtl"
+    lock-scroll
+    title="Выберите поля для отчета"
+    size="false"
+  >
+    <template #default>
+      <el-row><el-switch v-model="reportForm.created_at" active-text="Создано в" /></el-row>
+      <el-row><el-switch v-model="reportForm.done_at" active-text="Выполнено в" /></el-row>
+      <el-row><el-switch v-model="reportForm.status" active-text="Cтатус" /></el-row>
+      <el-row><el-switch v-model="reportForm.technician" active-text="Мастер" /></el-row>
+      <el-row>
+        <el-switch v-model="reportForm.performed_works" active-text="Проделанные работы" />
+      </el-row>
+      <el-row><el-switch v-model="reportForm.cabinet" active-text="Кабинет" /></el-row>
+      <el-row><el-switch v-model="reportForm.client" active-text="Ф.И.О. Заказчика" /></el-row>
+      <el-row>
+        <el-switch v-model="reportForm.client_phone" active-text="Телефон заказчика" />
+      </el-row>
+      <el-row><el-switch v-model="reportForm.defects" active-text="Неисправности" /></el-row>
+      <br />
+      <el-button @click="reportDrawer = false">Отмена</el-button>
+      <el-button type="primary" @click="getReport()">Создать</el-button>
+    </template>
+  </el-drawer>
   <el-container style="height: 100vh">
     <el-container style="background-color: white">
       <base-menu v-model="drawer"></base-menu>
@@ -71,7 +97,7 @@
           <el-button
             type="primary"
             style="margin: 0 0.5rem; margin-top: 1.125rem"
-            @click="getReport()"
+            @click="toggleReportDrawer()"
           >
             Создать отчет
           </el-button>
@@ -122,26 +148,45 @@ export default {
         });
     };
 
+    const reportDrawer = ref(false);
+    const toggleReportDrawer = () => {
+      reportDrawer.value = !reportDrawer.value;
+    };
+    const reportForm = ref({
+      created_at: true,
+      done_at: true,
+      status: true,
+      technician: true,
+      performed_works: true,
+      cabinet: true,
+      client: true,
+      client_phone: true,
+      defects: true
+    });
     const getReport = () => {
-      axios
-        .get("/dashboard/report", {
-          params: {
-            filters: JSON.stringify(store.getters.optionsAndFilters)
-          },
-          responseType: "blob"
-        })
-        .then((response) => {
-          console.log(response.data);
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", "Report.xlsx");
-          document.body.appendChild(link);
-          link.click();
-        })
-        .catch(() => {
-          ElMessage.error("Упс! Не удалось загрузить отчет!");
-        });
+      if (Object.keys(reportForm.value).some((key) => reportForm.value[key])) {
+        axios
+          .get("/dashboard/report", {
+            params: {
+              filters: JSON.stringify(store.getters.optionsAndFilters),
+              columns: JSON.stringify(reportForm.value)
+            },
+            responseType: "blob"
+          })
+          .then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "Report.xlsx");
+            document.body.appendChild(link);
+            link.click();
+          })
+          .catch(() => {
+            ElMessage.error("Упс! Не удалось загрузить отчет!");
+          });
+      } else {
+        ElMessage.error("Пожалуйста, укажите хотя бы одно поле");
+      }
     };
 
     const update = ref(false);
@@ -205,6 +250,9 @@ export default {
       drawer,
       toggleDrawer,
       handleUpdate,
+      reportDrawer,
+      toggleReportDrawer,
+      reportForm,
       getReport,
       update,
       toggleUpdate,
