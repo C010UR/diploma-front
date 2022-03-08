@@ -183,9 +183,14 @@ export default {
       () => getTableData()
     );
 
-    const socket = io("https://mtec-support.herokuapp.com/", {
-      transports: ["websocket"]
-    });
+    const socket = io(
+      process.env.NODE_ENV === "production"
+        ? "https://mtec-support.herokuapp.com/"
+        : "http://localhost:3000",
+      {
+        transports: ["websocket"]
+      }
+    );
     socket.on("row:new", () => {
       getTableData(false);
       emit("update");

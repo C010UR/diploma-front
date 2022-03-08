@@ -8,18 +8,18 @@
   >
     <template #default>
       <el-row><el-switch v-model="reportForm.created_at" active-text="Создано в" /></el-row>
+      <el-row><el-switch v-model="reportForm.defects" active-text="Неисправности" /></el-row>
+      <el-row><el-switch v-model="reportForm.cabinet" active-text="Кабинет" /></el-row>
       <el-row><el-switch v-model="reportForm.done_at" active-text="Выполнено в" /></el-row>
-      <el-row><el-switch v-model="reportForm.status" active-text="Cтатус" /></el-row>
       <el-row><el-switch v-model="reportForm.technician" active-text="Мастер" /></el-row>
+      <el-row><el-switch v-model="reportForm.status" active-text="Cтатус" /></el-row>
       <el-row>
         <el-switch v-model="reportForm.performed_works" active-text="Проделанные работы" />
       </el-row>
-      <el-row><el-switch v-model="reportForm.cabinet" active-text="Кабинет" /></el-row>
       <el-row><el-switch v-model="reportForm.client" active-text="Ф.И.О. Заказчика" /></el-row>
       <el-row>
         <el-switch v-model="reportForm.client_phone" active-text="Телефон заказчика" />
       </el-row>
-      <el-row><el-switch v-model="reportForm.defects" active-text="Неисправности" /></el-row>
       <br />
       <el-button @click="reportDrawer = false">Отмена</el-button>
       <el-button type="primary" @click="getReport()">Создать</el-button>
@@ -154,14 +154,14 @@ export default {
     };
     const reportForm = ref({
       created_at: true,
-      done_at: true,
-      status: true,
-      technician: true,
-      performed_works: true,
+      defects: true,
       cabinet: true,
+      done_at: true,
+      technician: true,
+      status: true,
+      performed_works: true,
       client: true,
-      client_phone: true,
-      defects: true
+      client_phone: true
     });
     const getReport = () => {
       if (Object.keys(reportForm.value).some((key) => reportForm.value[key])) {
