@@ -6,7 +6,7 @@
 
 <script>
 import TheForm from "./components/TheForm.vue";
-import BaseForm from "../../shared/components/baseForm.vue";
+import BaseForm from "../../shared/components/BaseForm.vue";
 
 export default {
   components: {

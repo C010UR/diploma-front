@@ -34,6 +34,14 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "notFound",
+    component: () => import("../views/notFound.vue"),
+    meta: {
+      requiresAuth: false
+    }
   }
 ];
 
@@ -46,16 +54,10 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   try {
     const data = await axios.get("/dashboard/auth/check");
-    if (!data.data.authorized) {
-      if (to.meta.requiresAuth) {
-        next("/dashboard/login");
-      } else {
-        next();
-      }
-    } else if (to.meta.requiresAuth) {
-      next();
+    if (!data.data.authorized && to.meta.requiresAuth) {
+      next("/dashboard/login");
     } else {
-      next("/dashboard");
+      next();
     }
   } catch {
     next();

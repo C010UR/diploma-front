@@ -60,7 +60,7 @@ import validator from "validator";
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
-import BaseForm from "../../../shared/components/baseForm.vue";
+import BaseForm from "../../../shared/components/BaseForm.vue";
 import axios from "../../../shared/axios.js";
 
 export default {
