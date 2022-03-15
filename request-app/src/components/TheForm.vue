@@ -79,6 +79,8 @@
       <el-input
         type="textarea"
         v-model="form.description"
+        maxlength="255"
+        show-word-limit
         placeholder="В 9.15 сломался комьютер"
         :disabled="disable.description"
         :autosize="{ minRows: 3 }"

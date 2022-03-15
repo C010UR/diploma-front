@@ -62,7 +62,12 @@
   </div>
   <el-form inline v-if="!isAdministrator" :model="addForm" ref="formRef" :rules="rules">
     <el-form-item label="Значение" prop="value">
-      <el-input v-model="addForm.value" style="width: 50ch"></el-input>
+      <el-input
+        v-model="addForm.value"
+        style="width: 50ch"
+        :maxlength="max"
+        show-word-limit
+      ></el-input>
     </el-form-item>
     <el-form-item v-if="isUrgency" label="Интервал" prop="interval">
       <el-input v-model="addForm.interval" style="width: 50ch"></el-input>
@@ -97,6 +102,11 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    max: {
+      type: Number,
+      required: false,
+      default: 255
     }
   },
   setup(props) {

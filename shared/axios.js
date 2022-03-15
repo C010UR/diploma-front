@@ -5,7 +5,7 @@ const url =
     ? "https://mtec-support.herokuapp.com"
     : "http://localhost:3000";
 const axiosInstance = axios.create({
-  baseURL: `${url}/support/api`,
+  baseURL: `${url}/support/api/v1`,
   headers: {
     "Content-type": "application/json"
   },

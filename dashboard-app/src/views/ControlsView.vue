@@ -32,23 +32,23 @@
       <el-main class="main">
         <div>
           <section class="section" id="masters" :ref="(el) => (refs.masters = el)">
-            <controls-table table="technicians" label="Мастера"></controls-table>
+            <controls-table table="technicians" label="Мастера" :max="64"></controls-table>
             <el-divider class="divider"></el-divider>
           </section>
           <section class="section" id="common_works" :ref="(el) => (refs.common_works = el)">
-            <controls-table table="works" label="Проделанные работы"></controls-table>
+            <controls-table table="works" label="Проделанные работы" :max="64"></controls-table>
             <el-divider class="divider"></el-divider>
           </section>
           <section class="section" id="common_defects" :ref="(el) => (refs.common_defects = el)">
-            <controls-table table="defects" label="Неисправности"></controls-table>
+            <controls-table table="defects" label="Неисправности" :max="64"></controls-table>
             <el-divider class="divider"></el-divider>
           </section>
           <section class="section" id="cabinets" :ref="(el) => (refs.cabinets = el)">
-            <controls-table table="cabinets" label="Кабинеты"></controls-table>
+            <controls-table table="cabinets" label="Кабинеты" :max="32"></controls-table>
             <el-divider class="divider"></el-divider>
           </section>
           <section class="section" id="urgency" :ref="(el) => (refs.urgency = el)">
-            <controls-table table="urgency" label="Срочности" isUrgency></controls-table>
+            <controls-table table="urgency" label="Срочности" :max="32" isUrgency></controls-table>
             <el-divider class="divider"></el-divider>
           </section>
           <section class="section" id="administrators" :ref="(el) => (refs.administrators = el)">
