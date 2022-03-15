@@ -3,7 +3,7 @@
 </template>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400&family=Open+Sans:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Open+Sans:wght@400;500;600&display=swap");
 
 *,
 *:before,
@@ -25,6 +25,6 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: "Merriweather", serif;
+  font-family: "IBM Plex Sans", sans-serif;
 }
 </style>
