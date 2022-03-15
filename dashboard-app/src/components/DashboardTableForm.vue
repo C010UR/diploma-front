@@ -10,7 +10,13 @@
           style="min-width: 42ch"
         >
           <el-option
-            v-for="item in masters"
+            v-if="nilTechnician"
+            label="[Удалено]"
+            value="00000000-0000-0000-0000-000000000000"
+            disabled
+          ></el-option>
+          <el-option
+            v-for="item in technicians"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -56,7 +62,7 @@ export default {
       type: Array,
       required: true
     },
-    masters: {
+    technicians: {
       type: Array,
       required: true
     }
@@ -64,6 +70,7 @@ export default {
   emits: ["submit:error", "submit:success"],
   data() {
     return {
+      nilTechnician: false,
       form: {
         id: this.prop.row._id,
         technician_id: this.prop.row.technician_id,
@@ -74,7 +81,11 @@ export default {
           {
             required: true,
             message: "Пожалуйста, выберите исполнителя",
-            trigger: "blur"
+            trigger: "change"
+          },
+          {
+            validator: this.validateTechnician,
+            trigger: "change"
           }
         ],
         performed_works: [
@@ -106,6 +117,26 @@ export default {
         }
         return false;
       });
+    },
+    validateTechnician(rule, value, callback) {
+      if (value === "00000000-0000-0000-0000-000000000000") {
+        callback(new Error("Пожалуйста, выберите исполнителя"));
+      } else {
+        callback();
+      }
+    }
+  },
+  watch: {
+    // eslint-disable-next-line func-names
+    "form.technician_id": function (newVal) {
+      if (newVal !== "00000000-0000-0000-0000-000000000000") {
+        this.nilTechnician = false;
+      }
+    }
+  },
+  mounted() {
+    if (this.form.technician_id === "00000000-0000-0000-0000-000000000000") {
+      this.nilTechnician = true;
     }
   }
 };

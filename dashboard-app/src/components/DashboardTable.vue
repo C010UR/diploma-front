@@ -17,14 +17,14 @@
             <p>{{ props.row.defect_description }}</p>
           </div>
         </div>
-        <dashboard-table-row
+        <dashboard-table-form
           :prop="props"
-          :masters="masters"
+          :technicians="technicians"
           :commonPerformedWorks="commonPerformedWorks"
           @submit:error="submitError()"
           @submit:success="submitSuccess()"
           style="margin-left: 2rem"
-        ></dashboard-table-row>
+        ></dashboard-table-form>
       </template>
     </el-table-column>
     <el-table-column label="Создано в" prop="created_at" width="145" sortable="custom" />
@@ -48,12 +48,12 @@ import { ref, onMounted, computed, watch } from "vue";
 import { useStore } from "vuex";
 import { ElMessage } from "element-plus";
 import { io } from "socket.io-client";
-import DashboardTableRow from "./DashboardTableForm.vue";
+import DashboardTableForm from "./DashboardTableForm.vue";
 import axios from "../../../shared/axios.js";
 
 export default {
   components: {
-    DashboardTableRow
+    DashboardTableForm
   },
   emits: ["update"],
   props: {
@@ -67,7 +67,7 @@ export default {
     const store = useStore();
     const tableOptions = computed(() => store.getters.optionsAndFilters);
 
-    const masters = ref([]);
+    const technicians = ref([]);
     const commonPerformedWorks = ref([]);
     const tableData = ref([]);
 
@@ -141,11 +141,11 @@ export default {
       getTableData();
     });
 
-    const getMasters = () => {
+    const getTechnicians = () => {
       axios
         .get("/dashboard/control/technicians")
         .then((response) => {
-          masters.value = response.data;
+          technicians.value = response.data;
         })
         .catch(() => {
           ElMessage.error("Упс! Не удалось загрузить данные!");
@@ -196,13 +196,13 @@ export default {
     });
     onMounted(() => {
       getTableData();
-      getMasters();
+      getTechnicians();
       getCommonPerformedWorks();
     });
     return {
       tableData,
       loading,
-      masters,
+      technicians,
       commonPerformedWorks,
       getStatusType,
       getStatus,
