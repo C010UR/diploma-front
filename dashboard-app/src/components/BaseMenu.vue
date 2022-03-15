@@ -23,7 +23,7 @@
         </template>
         <el-menu-item index="/dashboard/controls#masters">
           <el-icon><user /></el-icon>
-          Мастера
+          Исполнители
         </el-menu-item>
         <el-menu-item index="/dashboard/controls#common_works">
           <el-icon><check /></el-icon>

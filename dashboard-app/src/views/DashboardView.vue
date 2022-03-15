@@ -11,7 +11,7 @@
       <el-row><el-switch v-model="reportForm.defects" active-text="Неисправности" /></el-row>
       <el-row><el-switch v-model="reportForm.cabinet" active-text="Кабинет" /></el-row>
       <el-row><el-switch v-model="reportForm.done_at" active-text="Выполнено в" /></el-row>
-      <el-row><el-switch v-model="reportForm.technician" active-text="Мастер" /></el-row>
+      <el-row><el-switch v-model="reportForm.technician" active-text="Исполнитель" /></el-row>
       <el-row><el-switch v-model="reportForm.status" active-text="Cтатус" /></el-row>
       <el-row>
         <el-switch v-model="reportForm.performed_works" active-text="Проделанные работы" />

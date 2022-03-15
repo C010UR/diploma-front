@@ -2,10 +2,10 @@
   <div>
     <h4>Проделанные работы:</h4>
     <el-form ref="formRef" class="form" label-position="top" :model="form" :rules="rules" inline>
-      <el-form-item label="Мастер" prop="technician_id">
+      <el-form-item label="Исполнитель" prop="technician_id">
         <el-select
           v-model="form.technician_id"
-          placeholder="Пожалуйста, выберите мастера"
+          placeholder="Пожалуйста, выберите исполнителя"
           no-data-text="Упс! Что-то пошло не так!"
           style="min-width: 42ch"
         >
@@ -73,7 +73,7 @@ export default {
         technician_id: [
           {
             required: true,
-            message: "Пожалуйста, укажите мастера",
+            message: "Пожалуйста, выберите исполнителя",
             trigger: "blur"
           }
         ],

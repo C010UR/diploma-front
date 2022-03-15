@@ -32,7 +32,7 @@
       <el-main class="main">
         <div>
           <section class="section" id="masters" :ref="(el) => (refs.masters = el)">
-            <controls-table table="technicians" label="Мастера" :max="64"></controls-table>
+            <controls-table table="technicians" label="Исполнитель" :max="64"></controls-table>
             <el-divider class="divider"></el-divider>
           </section>
           <section class="section" id="common_works" :ref="(el) => (refs.common_works = el)">

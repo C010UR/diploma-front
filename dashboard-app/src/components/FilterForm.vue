@@ -188,7 +188,7 @@ export default {
         value: "defects"
       },
       {
-        label: "Мастер",
+        label: "Исполнитель",
         value: "technician_id"
       },
       {
