@@ -358,38 +358,6 @@ export default {
     };
 
     watch(
-      () => form.column,
-      () => {
-        switch (form.column) {
-          case "":
-          case "technician_id":
-            form.operatorColumns = [];
-            break;
-          case "performed_works":
-            form.operatorColumns = [operators.equals, operators.contains];
-            break;
-          case "defects":
-          case "client":
-          case "cabinet":
-            form.operatorColumns = [operators.equals, operators.like];
-            break;
-          case "status":
-            form.operatorColumns = [operators.equals, operators.between];
-            break;
-          case "done_at":
-          default:
-            form.operatorColumns = [
-              operators.greater,
-              operators.greaterEquals,
-              operators.lower,
-              operators.lowerEquals,
-              operators.between
-            ];
-        }
-      }
-    );
-
-    watch(
       () => [form.column, form.operator],
       () => {
         form.value = null;
@@ -465,22 +433,54 @@ export default {
       }
     };
 
-    const resetForm = (remainColumn) => {
+    const resetForm = (remainColumn, columnWasNull) => {
       if (!remainColumn) form.column = "";
       form.operator = "";
       form.value = null;
       form.value2 = null;
       formNotReady.value = true;
-      emit("filter", {
-        id: props.id,
-        delete: true
-      });
+      if (!columnWasNull) {
+        emit("filter", {
+          id: props.id,
+          delete: true
+        });
+      }
     };
 
     watch(
       () => form.column,
-      () => {
-        resetForm(true);
+      (newVal, prevVal) => {
+        if (prevVal === "") {
+          resetForm(true, true);
+        } else {
+          resetForm(true, false);
+        }
+        switch (form.column) {
+          case "":
+          case "technician_id":
+            form.operatorColumns = [];
+            break;
+          case "performed_works":
+            form.operatorColumns = [operators.equals, operators.contains];
+            break;
+          case "defects":
+          case "client":
+          case "cabinet":
+            form.operatorColumns = [operators.equals, operators.like];
+            break;
+          case "status":
+            form.operatorColumns = [operators.equals, operators.between];
+            break;
+          case "done_at":
+          default:
+            form.operatorColumns = [
+              operators.greater,
+              operators.greaterEquals,
+              operators.lower,
+              operators.lowerEquals,
+              operators.between
+            ];
+        }
       }
     );
 
