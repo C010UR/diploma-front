@@ -369,13 +369,9 @@ export default {
             form.operatorColumns = [operators.equals, operators.contains];
             break;
           case "defects":
-            form.operatorColumns = [operators.equals, operators.like];
-            break;
           case "client":
-            form.operatorColumns = [operators.equals, operators.like];
-            break;
           case "cabinet":
-            form.operatorColumns = [operators.equals, operators.between, operators.like];
+            form.operatorColumns = [operators.equals, operators.like];
             break;
           case "status":
             form.operatorColumns = [operators.equals, operators.between];
@@ -390,13 +386,6 @@ export default {
               operators.between
             ];
         }
-      }
-    );
-
-    watch(
-      () => form.column,
-      () => {
-        form.operator = "";
       }
     );
 
@@ -476,8 +465,8 @@ export default {
       }
     };
 
-    const resetForm = () => {
-      form.column = "";
+    const resetForm = (remainColumn) => {
+      if (!remainColumn) form.column = "";
       form.operator = "";
       form.value = null;
       form.value2 = null;
@@ -487,6 +476,13 @@ export default {
         delete: true
       });
     };
+
+    watch(
+      () => form.column,
+      () => {
+        resetForm(true);
+      }
+    );
 
     return {
       formNotReady,

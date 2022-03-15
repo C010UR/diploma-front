@@ -52,9 +52,13 @@
           <h3 style="margin: 0; margin-right: 1rem">Фильтрация</h3>
           <el-switch style="margin-top: -0.25rem" v-model="filter" />
         </el-row>
-        <div v-if="filter">
+        <div v-if="filter" style="margin-top: 0.5rem">
           <el-row v-for="i in filterCount" :key="i">
-            <filter-form :id="i" @filter="handleFilter" @error="handleError"></filter-form>
+            <dashboard-filter-form
+              :id="i"
+              @filter="handleFilter"
+              @error="handleError"
+            ></dashboard-filter-form>
           </el-row>
         </div>
         <div style="position: absolute; right: 1rem; top: 1rem">
@@ -114,14 +118,14 @@ import { useRouter } from "vue-router";
 import { ElMessage, ElNotification } from "element-plus";
 import { UserFilled, Menu, RefreshRight } from "@element-plus/icons-vue";
 import BaseMenu from "../components/BaseMenu.vue";
-import FilterForm from "../components/FilterForm.vue";
+import DashboardFilterForm from "../components/DashboardFilterForm.vue";
 import DashboardTable from "../components/DashboardTable.vue";
 import axios from "../../../shared/axios.js";
 
 export default {
   components: {
     BaseMenu,
-    FilterForm,
+    DashboardFilterForm,
     DashboardTable
   },
   setup() {
