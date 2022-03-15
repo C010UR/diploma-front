@@ -450,7 +450,7 @@ export default {
     watch(
       () => form.column,
       (newVal, prevVal) => {
-        if (prevVal === "") {
+        if (prevVal === "" || form.operator === "") {
           resetForm(true, true);
         } else {
           resetForm(true, false);
