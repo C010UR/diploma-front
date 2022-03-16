@@ -433,28 +433,21 @@ export default {
       }
     };
 
-    const resetForm = (remainColumn, columnWasNull) => {
-      if (!remainColumn) form.column = "";
+    const resetForm = () => {
+      form.column = "";
       form.operator = "";
       form.value = null;
       form.value2 = null;
       formNotReady.value = true;
-      if (!columnWasNull) {
-        emit("filter", {
-          id: props.id,
-          delete: true
-        });
-      }
+      emit("filter", {
+        id: props.id,
+        delete: true
+      });
     };
 
     watch(
       () => form.column,
-      (newVal, prevVal) => {
-        if (prevVal === "" || form.operator === "") {
-          resetForm(true, true);
-        } else {
-          resetForm(true, false);
-        }
+      () => {
         switch (form.column) {
           case "":
           case "technician_id":

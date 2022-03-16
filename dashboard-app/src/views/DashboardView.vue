@@ -239,7 +239,10 @@ export default {
         filterCount.value = filterParam.id;
       } else {
         store.dispatch("addFilters", filterParam);
-        filterCount.value = filterCount.value === 8 ? 8 : filterParam.id + 1;
+        filterCount.value =
+          filterCount.value > filterParam.id + 1 || filterParam.id > 7
+            ? filterCount.value
+            : filterParam.id + 1;
       }
       getPages();
     };
