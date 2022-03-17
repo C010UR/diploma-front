@@ -39,7 +39,7 @@
           >
             Меню
           </el-button>
-          <h2>Заявки на неисправности</h2>
+          <h2>Заявки на ремонт</h2>
           <el-button
             size="large"
             :icon="RefreshRight"
