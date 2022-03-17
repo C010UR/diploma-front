@@ -27,11 +27,11 @@
         </el-menu-item>
         <el-menu-item index="/dashboard/controls#common_works">
           <el-icon><check /></el-icon>
-          Проделанные работы
+          Типовые работы
         </el-menu-item>
         <el-menu-item index="/dashboard/controls#common_defects">
           <el-icon><help /></el-icon>
-          Типовые Неисправности
+          Типовые неисправности
         </el-menu-item>
         <el-menu-item index="/dashboard/controls#cabinets">
           <el-icon><office-building /></el-icon>

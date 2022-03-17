@@ -36,7 +36,7 @@
             <el-divider class="divider"></el-divider>
           </section>
           <section class="section" id="common_works" :ref="(el) => (refs.common_works = el)">
-            <controls-table table="works" label="Проделанные работы" :max="64"></controls-table>
+            <controls-table table="works" label="Типовые работы" :max="64"></controls-table>
             <el-divider class="divider"></el-divider>
           </section>
           <section class="section" id="common_defects" :ref="(el) => (refs.common_defects = el)">
