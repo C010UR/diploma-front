@@ -31,7 +31,7 @@
         </el-menu-item>
         <el-menu-item index="/dashboard/controls#common_defects">
           <el-icon><help /></el-icon>
-          Неисправности
+          Типовые Неисправности
         </el-menu-item>
         <el-menu-item index="/dashboard/controls#cabinets">
           <el-icon><office-building /></el-icon>

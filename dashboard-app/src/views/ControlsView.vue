@@ -40,7 +40,11 @@
             <el-divider class="divider"></el-divider>
           </section>
           <section class="section" id="common_defects" :ref="(el) => (refs.common_defects = el)">
-            <controls-table table="defects" label="Неисправности" :max="64"></controls-table>
+            <controls-table
+              table="defects"
+              label="Типовые неисправности"
+              :max="64"
+            ></controls-table>
             <el-divider class="divider"></el-divider>
           </section>
           <section class="section" id="cabinets" :ref="(el) => (refs.cabinets = el)">
