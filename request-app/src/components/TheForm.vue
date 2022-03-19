@@ -5,7 +5,7 @@
         v-model="form.clientName"
         placeholder="Иванов Иван Иванович"
         :disabled="disable.clientName"
-        maxlength="128"
+        maxlength="64"
         show-word-limit
         clearable
         style="max-width: 132ch"
