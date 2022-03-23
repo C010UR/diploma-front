@@ -248,7 +248,7 @@ export default {
         text: "Вчера",
         value: () => {
           const date = new Date();
-          date.setTime(date.getTime() - 3600 * 1000 * 24);
+          date.setTime(date.getTime() - 86400000);
           return date;
         }
       },
@@ -256,7 +256,7 @@ export default {
         text: "Неделю назад",
         value: () => {
           const date = new Date();
-          date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+          date.setTime(date.getTime() - 604800000);
           return date;
         }
       }
@@ -268,7 +268,7 @@ export default {
         value: () => {
           const end = new Date();
           const start = new Date();
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+          start.setTime(start.getTime() - 604800000);
           return [start, end];
         }
       },
@@ -277,7 +277,7 @@ export default {
         value: () => {
           const end = new Date();
           const start = new Date();
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+          start.setTime(start.getTime() - 2592000000);
           return [start, end];
         }
       },
@@ -286,7 +286,7 @@ export default {
         value: () => {
           const end = new Date();
           const start = new Date();
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+          start.setTime(start.getTime() - 7776000000);
           return [start, end];
         }
       },
@@ -295,7 +295,7 @@ export default {
         value: () => {
           const end = new Date();
           const start = new Date();
-          start.setTime(start.getTime() - 3600 * 1000 * 24 * 365);
+          start.setTime(start.getTime() - 31536000000);
           return [start, end];
         }
       }
@@ -433,12 +433,16 @@ export default {
       }
     };
 
-    const resetForm = () => {
-      form.column = "";
+    const clearFields = () => {
       form.operator = "";
       form.value = null;
       form.value2 = null;
       formNotReady.value = true;
+    };
+
+    const resetForm = () => {
+      clearFields();
+      form.column = "";
       emit("filter", {
         id: props.id,
         delete: true
@@ -448,6 +452,7 @@ export default {
     watch(
       () => form.column,
       () => {
+        clearFields();
         switch (form.column) {
           case "":
           case "technician_id":

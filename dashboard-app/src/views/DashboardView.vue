@@ -219,6 +219,7 @@ export default {
         for (let i = 1; i <= filterCount.value; i++) {
           store.dispatch("removeFilters", i);
         }
+        getPages();
       }
       filterCount.value = 1;
     });
