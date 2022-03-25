@@ -59,7 +59,7 @@
 import validator from "validator";
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+import { errorPopup } from "../../../shared/notifications.js";
 import BaseForm from "../../../shared/components/BaseForm.vue";
 import axios from "../../../shared/axios.js";
 
@@ -99,7 +99,7 @@ export default {
           router.push("/dashboard/login");
         })
         .catch(() => {
-          ElMessage.error("Логин уже существует либо секретный ключ неверен!");
+          errorPopup("Логин уже существует либо секретный ключ неверен!");
           toggleAll();
         });
     };

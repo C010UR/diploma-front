@@ -70,12 +70,12 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted, onBeforeUnmount, watch, h } from "vue";
+import { ref, reactive, onMounted, onBeforeUnmount, watch } from "vue";
 import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
 import { io } from "socket.io-client";
-import { ElNotification } from "element-plus";
 import { UserFilled, Menu } from "@element-plus/icons-vue";
+import { notification } from "../../../shared/notifications.js";
 import BaseMenu from "../components/BaseMenu.vue";
 import ControlsTable from "../components/ControlsTable.vue";
 import axios from "../../../shared/axios.js";
@@ -161,10 +161,7 @@ export default {
     );
     socket.on("row:new", () => {
       store.dispatch("setUpdated");
-      ElNotification({
-        title: "Новая заявка",
-        message: h("i", { style: "color: teal" }, "Появилась новая заявка!")
-      });
+      notification("Новая заявка", "Появилась новая заявка!");
     });
 
     onBeforeUnmount(() => {

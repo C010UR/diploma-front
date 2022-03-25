@@ -112,12 +112,12 @@
 </template>
 
 <script>
-import { h, ref, watch, onMounted, onBeforeUnmount } from "vue";
+import { ref, watch, onMounted, onBeforeUnmount } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { io } from "socket.io-client";
-import { ElMessage, ElNotification } from "element-plus";
 import { UserFilled, Menu, RefreshRight } from "@element-plus/icons-vue";
+import { notification, errorPopup } from "../../../shared/notifications.js";
 import BaseMenu from "../components/BaseMenu.vue";
 import DashboardFilterForm from "../components/DashboardFilterForm.vue";
 import DashboardTable from "../components/DashboardTable.vue";
@@ -149,7 +149,7 @@ export default {
           totalRows.value = parseInt(response.data.count, 10);
         })
         .catch(() => {
-          ElMessage.error("Упс! Не удалось загрузить страницы!");
+          errorPopup("Упс! Не удалось загрузить страницы!");
         });
     };
 
@@ -187,10 +187,10 @@ export default {
             link.click();
           })
           .catch(() => {
-            ElMessage.error("Упс! Не удалось загрузить отчет!");
+            errorPopup("Упс! Не удалось загрузить отчет!");
           });
       } else {
-        ElMessage.error("Пожалуйста, укажите хотя бы одно поле");
+        errorPopup("Пожалуйста, укажите хотя бы одно поле");
       }
     };
 
@@ -238,7 +238,7 @@ export default {
     };
 
     const handleError = () => {
-      ElMessage.error("Упс! Что-то пошло не так");
+      errorPopup("Упс! Что-то пошло не так");
     };
 
     const socket = io(
@@ -252,10 +252,7 @@ export default {
     socket.on("row:new", () => {
       store.dispatch("setUpdated");
       getPages();
-      ElNotification({
-        title: "Новая заявка",
-        message: h("i", { style: "color: teal" }, "Появилась новая заявка!")
-      });
+      notification("Новая заявка", "Появилась новая заявка!");
     });
 
     onBeforeUnmount(() => {

@@ -39,7 +39,7 @@
 <script>
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+import { errorPopup } from "../../../shared/notifications.js";
 import BaseForm from "../../../shared/components/BaseForm.vue";
 import axios from "../../../shared/axios.js";
 
@@ -72,11 +72,11 @@ export default {
         })
         .catch((error) => {
           if (error.response?.status === 401) {
-            ElMessage.error("Логин либо пароль неверны!");
+            errorPopup("Логин либо пароль неверны!");
             toggleAll();
             return;
           }
-          ElMessage.error("Упс! Что-то пошло не так!");
+          errorPopup("Упс! Что-то пошло не так!");
         });
     };
     const submitForm = () => {

@@ -79,8 +79,8 @@
 </template>
 
 <script>
-import { h, ref, reactive, onMounted } from "vue";
-import { ElNotification } from "element-plus";
+import { ref, reactive, onMounted } from "vue";
+import { notificationError, notification } from "../../../shared/notifications.js";
 import axios from "../../../shared/axios.js";
 
 export default {
@@ -113,11 +113,7 @@ export default {
     const tableData = ref([]);
 
     const handleError = () => {
-      ElNotification({
-        title: "Ошибка",
-        message: h("i", { style: "color: teal" }, `Ошибка в таблице ${props.label}`),
-        type: "error"
-      });
+      notificationError("Ошибка", `Ошибка в таблице ${props.label}`);
     };
 
     const getTableData = () => {
@@ -136,11 +132,7 @@ export default {
         .delete(`/dashboard/control/${props.table}`, { data: { id: tableData.value[index].value } })
         .then(() => {
           getTableData();
-          ElNotification({
-            title: "Успешно удалено",
-            message: h("i", { style: "color: teal" }, `Удалено в таблице ${props.label}`),
-            type: "success"
-          });
+          notification("Успешно удалено", `Удалено в таблице ${props.label}`, true);
         })
         .catch(() => {
           handleError();
@@ -165,11 +157,7 @@ export default {
         .patch(`/dashboard/control/${props.table}`, data)
         .then(() => {
           getTableData();
-          ElNotification({
-            title: "Успешно изменено",
-            message: h("i", { style: "color: teal" }, `Заменено в таблице ${props.label}`),
-            type: "success"
-          });
+          notification("Успешно изменено", `Заменено в таблице ${props.label}`, true);
         })
         .catch(() => {
           handleError();
@@ -209,11 +197,7 @@ export default {
             .post(`/dashboard/control/${props.table}`, data)
             .then(() => {
               getTableData();
-              ElNotification({
-                title: "Успешно добавлено",
-                message: h("i", { style: "color: teal" }, `Добавлено в таблицу ${props.label}`),
-                type: "success"
-              });
+              notification("Успешно добавлено", `Добавлено в таблицу ${props.label}`, true);
             })
             .catch(() => {
               handleError();

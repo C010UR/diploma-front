@@ -46,7 +46,7 @@
 <script>
 import { ref, onMounted, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { ElMessage } from "element-plus";
+import { errorPopup, successPopup } from "../../../shared/notifications.js";
 import DashboardTableForm from "./DashboardTableForm.vue";
 import axios from "../../../shared/axios.js";
 
@@ -133,7 +133,7 @@ export default {
           loading.value = false;
         })
         .catch(() => {
-          ElMessage.error("Упс! Не удалось загрузить данные!");
+          errorPopup("Упс! Не удалось загрузить данные!");
         });
     };
 
@@ -161,7 +161,7 @@ export default {
           technicians.value = response.data;
         })
         .catch(() => {
-          ElMessage.error("Упс! Не удалось загрузить данные!");
+          errorPopup("Упс! Не удалось загрузить данные!");
         });
     };
 
@@ -172,16 +172,16 @@ export default {
           commonPerformedWorks.value = response.data;
         })
         .catch(() => {
-          ElMessage.error("Упс! Не удалось загрузить данные!");
+          errorPopup("Упс! Не удалось загрузить данные!");
         });
     };
 
     const submitSuccess = () => {
-      ElMessage.success("Успешно сохранено");
+      successPopup("Успешно сохранено");
       getTableData();
     };
     const submitError = () => {
-      ElMessage.error("Упс! Не удалось сохранить данные");
+      errorPopup("Упс! Не удалось сохранить данные");
     };
 
     const changeSorting = ({ prop, order }) => {

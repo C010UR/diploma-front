@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { ElMessage } from "element-plus";
+import { errorPopup, successPopup } from "../../../shared/notifications.js";
 import axios from "../../../shared/axios.js";
 
 export default {
@@ -217,17 +217,14 @@ export default {
       axios
         .post("/request", data)
         .then(() => {
-          ElMessage({
-            message: "Успешно отправлено",
-            type: "success"
-          });
+          successPopup("Успешно отправлено");
           this.setLocalStorate();
           this.resetForm();
           this.getLocalStorage();
           this.toggleAll();
         })
         .catch(() => {
-          ElMessage.error(
+          errorPopup(
             "Упс! Мы не смогли отправить заявку. Повторите попытку позже либо обратитесь к администратору"
           );
           this.toggleAll();
@@ -278,9 +275,7 @@ export default {
         this.getLocalStorage();
       })
       .catch(() => {
-        ElMessage.error(
-          "Упс! Мы не смогли загрузить данные. Пожалуйста, обратитесь к администратору."
-        );
+        errorPopup("Упс! Мы не смогли загрузить данные. Пожалуйста, обратитесь к администратору.");
         this.toggleAll();
       });
   }
