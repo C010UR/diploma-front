@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
+    updated: false,
     limit: 50,
     page: 1,
     orderBy: "created_at",
@@ -27,6 +28,9 @@ export default createStore({
         max = filter.id > max ? filter.id : max;
       });
       return max;
+    },
+    updated(state) {
+      return state.updated;
     }
   },
   mutations: {
@@ -51,6 +55,9 @@ export default createStore({
         }
       }
     },
+    setUpdated(state, payload) {
+      state.updated = payload;
+    },
     addFilters(state, payload) {
       state.filters = state.filters.filter((row) => row.id !== payload.id);
       state.filters.push(payload);
@@ -68,6 +75,12 @@ export default createStore({
     },
     removeFilters(context, payload) {
       context.commit("removeFilters", payload);
+    },
+    setUpdated(context) {
+      context.commit("setUpdated", true);
+    },
+    unsetUpdated(context) {
+      context.commit("setUpdated", false);
     }
   }
 });

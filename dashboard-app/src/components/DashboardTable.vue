@@ -47,7 +47,6 @@
 import { ref, onMounted, computed, watch } from "vue";
 import { useStore } from "vuex";
 import { ElMessage } from "element-plus";
-import { io } from "socket.io-client";
 import DashboardTableForm from "./DashboardTableForm.vue";
 import axios from "../../../shared/axios.js";
 
@@ -55,7 +54,6 @@ export default {
   components: {
     DashboardTableForm
   },
-  emits: ["update"],
   props: {
     update: {
       type: Boolean,
@@ -63,9 +61,8 @@ export default {
       default: false
     }
   },
-  setup(props, { emit }) {
+  setup(props) {
     const store = useStore();
-    const tableOptions = computed(() => store.getters.optionsAndFilters);
 
     const technicians = ref([]);
     const commonPerformedWorks = ref([]);
@@ -124,6 +121,8 @@ export default {
     };
     const loading = ref(false);
 
+    const tableOptions = computed(() => store.getters.optionsAndFilters);
+
     const getTableData = (isLoading = true) => {
       loading.value = isLoading;
       axios
@@ -137,8 +136,22 @@ export default {
           ElMessage.error("Упс! Не удалось загрузить данные!");
         });
     };
+
+    watch(
+      () => props.update,
+      () => getTableData()
+    );
+
     watch(tableOptions, () => {
       getTableData();
+    });
+
+    const updated = computed(() => store.getters.updated);
+    watch(updated, () => {
+      if (updated.value) {
+        getTableData();
+        store.dispatch("unsetUpdated");
+      }
     });
 
     const getTechnicians = () => {
@@ -178,22 +191,6 @@ export default {
       });
     };
 
-    watch(
-      () => props.update,
-      () => getTableData()
-    );
-    const socket = io(
-      process.env.NODE_ENV === "production"
-        ? "https://mtec-support.herokuapp.com/"
-        : "http://localhost:3000",
-      {
-        transports: ["websocket"]
-      }
-    );
-    socket.on("row:new", () => {
-      getTableData(false);
-      emit("update");
-    });
     onMounted(() => {
       getTableData();
       getTechnicians();

@@ -70,8 +70,11 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted, watch } from "vue";
+import { ref, reactive, onMounted, onBeforeUnmount, watch, h } from "vue";
+import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
+import { io } from "socket.io-client";
+import { ElNotification } from "element-plus";
 import { UserFilled, Menu } from "@element-plus/icons-vue";
 import BaseMenu from "../components/BaseMenu.vue";
 import ControlsTable from "../components/ControlsTable.vue";
@@ -146,6 +149,27 @@ export default {
         }
       }
     );
+
+    const store = useStore();
+    const socket = io(
+      process.env.NODE_ENV === "production"
+        ? "https://mtec-support.herokuapp.com/"
+        : "http://localhost:3000",
+      {
+        transports: ["websocket"]
+      }
+    );
+    socket.on("row:new", () => {
+      store.dispatch("setUpdated");
+      ElNotification({
+        title: "Новая заявка",
+        message: h("i", { style: "color: teal" }, "Появилась новая заявка!")
+      });
+    });
+
+    onBeforeUnmount(() => {
+      socket.disconnect();
+    });
 
     onMounted(() => {
       if (router.currentRoute.value.hash) {

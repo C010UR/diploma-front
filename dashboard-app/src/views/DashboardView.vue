@@ -75,7 +75,7 @@
         </div>
       </el-header>
       <el-main style="padding: 0">
-        <dashboard-table @update="handleUpdate()" :update="update"></dashboard-table>
+        <dashboard-table :update="update"></dashboard-table>
       </el-main>
       <el-footer height="4rem">
         <el-row style="margin-left: auto; margin-right: 0">
@@ -112,9 +112,10 @@
 </template>
 
 <script>
-import { h, ref, watch, onMounted } from "vue";
+import { h, ref, watch, onMounted, onBeforeUnmount } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { io } from "socket.io-client";
 import { ElMessage, ElNotification } from "element-plus";
 import { UserFilled, Menu, RefreshRight } from "@element-plus/icons-vue";
 import BaseMenu from "../components/BaseMenu.vue";
@@ -199,14 +200,6 @@ export default {
       update.value = !update.value;
     };
 
-    const handleUpdate = () => {
-      getPages();
-      ElNotification({
-        title: "Новая заявка",
-        message: h("i", { style: "color: teal" }, "Появилась новая заявка!")
-      });
-    };
-
     watch([currentPage, pageSize], () => {
       store.dispatch("setOptions", {
         limit: pageSize.value,
@@ -230,10 +223,6 @@ export default {
       });
     };
 
-    onMounted(() => {
-      getPages();
-    });
-
     const handleFilter = (filterParam) => {
       if (filterParam.delete) {
         store.dispatch("removeFilters", { id: filterParam.id });
@@ -252,12 +241,36 @@ export default {
       ElMessage.error("Упс! Что-то пошло не так");
     };
 
+    const socket = io(
+      process.env.NODE_ENV === "production"
+        ? "https://mtec-support.herokuapp.com/"
+        : "http://localhost:3000",
+      {
+        transports: ["websocket"]
+      }
+    );
+    socket.on("row:new", () => {
+      store.dispatch("setUpdated");
+      getPages();
+      ElNotification({
+        title: "Новая заявка",
+        message: h("i", { style: "color: teal" }, "Появилась новая заявка!")
+      });
+    });
+
+    onBeforeUnmount(() => {
+      socket.disconnect();
+    });
+
+    onMounted(() => {
+      getPages();
+    });
+
     return {
       filter,
       filterCount,
       drawer,
       toggleDrawer,
-      handleUpdate,
       reportDrawer,
       toggleReportDrawer,
       reportForm,
