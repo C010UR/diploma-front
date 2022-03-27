@@ -1,7 +1,7 @@
 import { h } from "vue";
 import { ElNotification, ElMessage } from "element-plus";
-import errorSfx from "./assets/pack 2/error.ogg";
-import notificationSfx from "./assets/pack 2/notification.ogg";
+import errorSfx from "./assets/error.ogg";
+import notificationSfx from "./assets/notification.ogg";
 
 function notification(title, message, isSuccess) {
   ElNotification({
