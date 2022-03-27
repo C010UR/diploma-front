@@ -25,6 +25,9 @@
       <el-button type="primary" @click="getReport()">Создать</el-button>
     </template>
   </el-drawer>
+  <el-dialog v-model="viberDialog" title="Viber бот" width="300px" center>
+    <el-image :src="viberLink" style="width: 250px; height: 250px" lazy />
+  </el-dialog>
   <el-container style="height: 100vh">
     <el-container style="background-color: white">
       <base-menu v-model="drawer"></base-menu>
@@ -62,11 +65,19 @@
           </el-row>
         </div>
         <div style="position: absolute; right: 1rem; top: 1rem">
+          <el-button
+            @click="toggleViberDialog()"
+            style="margin-right: 1rem; margin-top: -0.5rem"
+            type="primary"
+            color="#7b519c"
+          >
+            Viber
+          </el-button>
           <el-popconfirm
             confirm-button-text="Да"
             cancel-button-text="Нет"
             title="Вы уверены, что хотите выйти?"
-            @confirm="logout"
+            @confirm="logout()"
           >
             <template #reference>
               <el-avatar :icon="UserFilled"></el-avatar>
@@ -122,6 +133,7 @@ import BaseMenu from "../components/BaseMenu.vue";
 import DashboardFilterForm from "../components/DashboardFilterForm.vue";
 import DashboardTable from "../components/DashboardTable.vue";
 import axios from "../../../shared/axios.js";
+import viberLink from "../../../shared/assets/viber.png";
 
 export default {
   components: {
@@ -157,6 +169,12 @@ export default {
     const toggleReportDrawer = () => {
       reportDrawer.value = !reportDrawer.value;
     };
+
+    const viberDialog = ref(false);
+    const toggleViberDialog = () => {
+      viberDialog.value = !viberDialog.value;
+    };
+
     const reportForm = ref({
       created_at: true,
       defects: true,
@@ -282,7 +300,10 @@ export default {
       handleError,
       UserFilled,
       Menu,
-      RefreshRight
+      RefreshRight,
+      viberLink,
+      viberDialog,
+      toggleViberDialog
     };
   }
 };
